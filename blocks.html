@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blocks — Anchor DS</title>
+<link rel="stylesheet" href="tokens.css?v=5" />
+<link rel="stylesheet" href="styles.css?v=5" />
+<link rel="stylesheet" href="shell.css?v=5" />
+</head>
+<body data-page="blocks">
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="brand" style="text-decoration:none;color:inherit"><span class="brand-dot"></span><span>Anchor DS</span><span class="badge badge-neutral">Preview · v0.1</span></a>
+  </div>
+  <div class="topbar-right">
+    <button class="btn btn-ghost btn-sm" id="themeToggle" aria-label="Toggle theme"><span class="theme-icon">◐</span> <span id="themeLabel">Dark</span></button>
+  </div>
+</header>
+<nav class="sidenav">
+  <div class="nav-sep">Design System</div>
+  <a href="index.html" class="nav-item">Overview</a>
+  <a href="foundations.html" class="nav-item">Foundations</a>
+  <a href="components.html" class="nav-item">Components</a>
+  <a href="blocks.html" class="nav-item active">Blocks</a>
+  <div class="nav-sep">On this page</div>
+  <a href="#app-shell" class="nav-item nav-sub">App shell bars</a>
+  <a href="#electrode-check" class="nav-item nav-sub">Detecting electrodes</a>
+  <a href="#ecg-12" class="nav-item nav-sub">ECG 12 leads</a>
+  <a href="#ecg-bottom-bar" class="nav-item nav-sub">ECG bottom bar</a>
+  <a href="#event-list" class="nav-item nav-sub">Event list</a>
+  <a href="#events-ecg" class="nav-item nav-sub">Events ECG</a>
+  <a href="#exam-search" class="nav-item nav-sub">Exam search</a>
+  <a href="#icon-button" class="nav-item nav-sub">Icon button & rail</a>
+  <a href="#lead-picker" class="nav-item nav-sub">Lead layout picker</a>
+  <a href="#mandatory" class="nav-item nav-sub">Mandatory fields</a>
+  <a href="#multi-site" class="nav-item nav-sub">Multi site</a>
+  <a href="#patient-form" class="nav-item nav-sub">Patient entry</a>
+  <a href="#patient-header" class="nav-item nav-sub">Patient header</a>
+  <a href="#pdf-toolbar" class="nav-item nav-sub">PDF viewer toolbar</a>
+  <a href="#quick-panel" class="nav-item nav-sub">Quick panel</a>
+  <a href="#report-modal" class="nav-item nav-sub">Report modal</a>
+  <a href="#scheduled-setup" class="nav-item nav-sub">Scheduled setup</a>
+  <a href="#setting-title" class="nav-item nav-sub">Setting title</a>
+  <a href="#settings-light" class="nav-item nav-sub">Settings (full)</a>
+  <a href="#settings-list" class="nav-item nav-sub">Settings list</a>
+  <a href="#system-settings" class="nav-item nav-sub">System settings</a>
+  <a href="#workflow" class="nav-item nav-sub">Workflow assistant</a>
+</nav>
+<main class="content">
+<div class="page-head"><h1>Blocks</h1></div>
+
+<section id="app-shell" class="section">
+
+    <h2>App shell bars</h2>
+    <p class="sub">Shell frame: dark patient header, ECG waveform bar, and system taskbar (37646:46441). Taskbar: 24px, backdrop-blur, clock + system tray (Bluetooth, WiFi, Speaker, Battery).</p>
+    <div class="stack">
+      <div class="upper-bar">
+        <div class="upper-left"><span class="upper-back">←</span><div><strong>John Doe Oliver</strong><div class="muted" style="font-size:12px">ID 123456</div></div></div>
+        <div class="upper-center"><span class="vital-heart">♥</span> <span class="upper-hr">85</span></div>
+        <div class="upper-right muted">1 exam waiting to be synced</div>
+      </div>
+      <div class="bottom-bar">
+        <span class="bottom-lead">V1</span>
+        <div class="bottom-wave"></div>
+        <button class="btn btn-default btn-sm">Save Report</button>
+      </div>
+      <div class="sys-taskbar">
+        <span class="sys-clock">10/05/2025 · 11:00 AM</span>
+        <div class="sys-tray">
+          <img src="icons/bluetooth.svg" alt="" class="sys-tray-svg" />
+          <span class="sys-tray-icon" aria-label="WiFi">&#xE701;</span>
+          <span class="sys-tray-icon" aria-label="Speaker">&#xE15D;</span>
+          <span class="sys-tray-icon" aria-label="Battery">&#xEBA9;</span>
+        </div>
+      </div>
+    </div>
+
+</section>
+
+<section id="electrode-check" class="section">
+
+  <h2>Detecting electrodes</h2>
+  <p class="sub">Impedance check before acquisition. Figma <code>37646-29054</code> (<code>ElectrodeCheck</code>, dark, 353×659).</p>
+  <div class="fm ec">
+    <div class="ec-title">Detecting electrodes</div>
+    <button class="fm-close" aria-label="Close"><img src="assets/imp_close.svg" alt="" /></button>
+    <img class="ec-body" src="assets/imp_torso.png" alt="" />
+    <span class="ec-dot" style="left:74px;top:195px">RA</span><span class="ec-dot" style="left:240px;top:177px">LA</span>
+    <span class="ec-dot" style="left:108px;top:226px">V1</span><span class="ec-dot" style="left:136px;top:226px">V2</span>
+    <span class="ec-dot ec-bad" style="left:150px;top:246px">V3</span><span class="ec-dot ec-bad" style="left:175px;top:257px">V4</span>
+    <span class="ec-dot" style="left:199px;top:246px">V5</span><span class="ec-dot" style="left:222px;top:230px">V6</span>
+    <span class="ec-dot" style="left:89px;top:381px">RL</span><span class="ec-dot" style="left:240px;top:381px">LL</span>
+    <div class="ec-legend"><span class="ec-pill"><i class="ec-led ec-ok"></i>Connected</span><span class="ec-pill"><i class="ec-led ec-bad-led"></i>Disconnected</span></div>
+    <button class="ec-run">Run impedance check</button>
+  </div>
+
+</section>
+
+<section id="ecg-12" class="section">
+
+    <h2>ECG 12 leads</h2>
+    <p class="sub">Waveform block of the Realtime 12-lead screen. Lead strips are Figma SVG exports; dark set (<code>ecg12d_*</code>) and light set (<code>ecg12l_*</code>) are swapped automatically when the theme changes. Figma dark 37646:48528 / 37646:48589; light 28586:47516 / 28586:47700.</p>
+    <div class="e12"><div class="e12-col"><div class="e12-row"><span class="e12-lab">I</span><img class="e12-a" src="assets/ecg12d_L0_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_L0_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_L0_c.svg" alt="" /></div><div class="e12-row"><span class="e12-lab">II</span><img class="e12-a" src="assets/ecg12d_L1_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_L1_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_L1_c.svg" alt="" /></div><div class="e12-row"><span class="e12-lab">III</span><img class="e12-a" src="assets/ecg12d_L2_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_L2_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_L2_c.svg" alt="" /></div><div class="e12-row"><span class="e12-lab">aVR</span><img class="e12-a" src="assets/ecg12d_L3_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_L3_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_L3_c.svg" alt="" /></div><div class="e12-row"><span class="e12-lab">aVL</span><img class="e12-a" src="assets/ecg12d_L4_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_L4_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_L4_c.svg" alt="" /></div><div class="e12-row"><span class="e12-lab">aVF</span><img class="e12-a" src="assets/ecg12d_L5_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_L5_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_L5_c.svg" alt="" /></div></div><div class="e12-col"><div class="e12-row"><span class="e12-lab">V1</span><img class="e12-a" src="assets/ecg12d_R0_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_R0_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_R0_c.svg" alt="" /></div><div class="e12-row"><span class="e12-lab">V2</span><img class="e12-a" src="assets/ecg12d_R1_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_R1_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_R1_c.svg" alt="" /></div><div class="e12-row"><span class="e12-lab">V3</span><img class="e12-a" src="assets/ecg12d_R2_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_R2_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_R2_c.svg" alt="" /></div><div class="e12-row"><span class="e12-lab">V4</span><img class="e12-a" src="assets/ecg12d_R3_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_R3_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_R3_c.svg" alt="" /></div><div class="e12-row"><span class="e12-lab">V5</span><img class="e12-a" src="assets/ecg12d_R4_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_R4_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_R4_c.svg" alt="" /></div><div class="e12-row"><span class="e12-lab">V6</span><img class="e12-a" src="assets/ecg12d_R5_a.svg" alt="" /><img class="e12-b" src="assets/ecg12d_R5_b.svg" alt="" /><img class="e12-c" src="assets/ecg12d_R5_c.svg" alt="" /></div></div></div>
+
+</section>
+
+<section id="ecg-bottom-bar" class="section">
+
+  <h2>ECG bottom bar</h2>
+  <p class="sub">Acquisition bottom bar variants from Figma (37646:30497, dark). 5 variants: default (Rhythm/Auto), without buttons, reject/next ECG, clear, one button.</p>
+  <div class="stack">
+
+    <!-- variant: default — 76px, swipe handle, V1 pill, Rhythm ghost + Auto split-button -->
+    <div class="ebb">
+      <div class="ebb-swipe"><img src="assets/ebb_chevron_up.svg" alt="" /></div>
+      <div class="ebb-lead">
+        <span class="ebb-lead-pill">V1</span>
+        <div class="ebb-track"><span class="ebb-wave"></span><span class="ebb-scale"><span>1s</span><span>5s</span><span>10s</span><span>15s</span><span>20s</span><span>25s</span><span>30s</span><span>35s</span><span>40s</span><span>45s</span><span>50s</span><span>55s</span><span>60s</span></span></div>
+      </div>
+      <div class="ebb-actions">
+        <button class="ebb-btn ebb-rhythm">Rhythm</button>
+        <div class="ebb-btn ebb-auto"><span class="ebb-auto-label">Auto</span><span class="ebb-auto-sep"></span><img src="assets/ebb_auto_chev.svg" alt="" class="ebb-auto-ico" /></div>
+      </div>
+    </div>
+
+    <!-- variant: without buttons — 87px, no swipe handle, lead only -->
+    <div class="ebb ebb-tall">
+      <div class="ebb-lead">
+        <span class="ebb-lead-lbl">V1</span>
+        <div class="ebb-track"><span class="ebb-wave"></span><span class="ebb-scale"><span>1s</span><span>5s</span><span>10s</span><span>15s</span><span>20s</span><span>25s</span><span>30s</span><span>35s</span><span>40s</span><span>45s</span><span>50s</span><span>55s</span><span>60s</span></span></div>
+      </div>
+    </div>
+
+    <!-- variant: reject / next ECG — 87px, swipe handle, Delete (trash icon) + Next ECG -->
+    <div class="ebb ebb-tall">
+      <div class="ebb-swipe"><img src="assets/ebb_chevron_up.svg" alt="" /></div>
+      <div class="ebb-lead">
+        <span class="ebb-lead-lbl">V1</span>
+        <div class="ebb-track"><span class="ebb-wave"></span><span class="ebb-scale"><span>1s</span><span>5s</span><span>10s</span><span>15s</span><span>20s</span><span>25s</span><span>30s</span><span>35s</span><span>40s</span><span>45s</span><span>50s</span><span>55s</span><span>60s</span></span></div>
+      </div>
+      <div class="ebb-actions">
+        <button class="ebb-btn ebb-ghost ebb-delete"><img src="assets/ebb_trash.svg" alt="" /> Delete</button>
+        <button class="ebb-btn ebb-primary ebb-next-ecg">Next ECG</button>
+      </div>
+    </div>
+
+    <!-- variant: clear — 87px, no swipe handle, Clear ghost + Cancel neutral + Save primary -->
+    <div class="ebb ebb-tall">
+      <div class="ebb-lead">
+        <span class="ebb-lead-lbl">V1</span>
+        <div class="ebb-track"><span class="ebb-wave"></span><span class="ebb-scale"><span>1s</span><span>5s</span><span>10s</span><span>15s</span><span>20s</span><span>25s</span><span>30s</span><span>35s</span><span>40s</span><span>45s</span><span>50s</span><span>55s</span><span>60s</span></span></div>
+      </div>
+      <div class="ebb-actions">
+        <button class="ebb-btn ebb-ghost">Clear</button>
+        <button class="ebb-btn ebb-cancel">Cancel</button>
+        <button class="ebb-btn ebb-primary ebb-save"><img src="assets/ebb_save_check.svg" alt="" /> Save</button>
+      </div>
+    </div>
+
+    <!-- variant: one button — 87px, swipe handle, Save Report primary -->
+    <div class="ebb ebb-tall">
+      <div class="ebb-swipe"><img src="assets/ebb_chevron_up.svg" alt="" /></div>
+      <div class="ebb-lead">
+        <span class="ebb-lead-lbl">V1</span>
+        <div class="ebb-track"><span class="ebb-wave"></span><span class="ebb-scale"><span>1s</span><span>5s</span><span>10s</span><span>15s</span><span>20s</span><span>25s</span><span>30s</span><span>35s</span><span>40s</span><span>45s</span><span>50s</span><span>55s</span><span>60s</span></span></div>
+      </div>
+      <div class="ebb-actions">
+        <button class="ebb-btn ebb-primary">Save Report</button>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<section id="event-list" class="section">
+
+  <h2>Event list</h2>
+  <p class="sub">Flagged-event picker. Figma 32705:69357 (light, 353px).</p>
+  <div class="fm ev">
+    <div class="ev-head"><div class="fm-title">Event</div><div class="fm-sub">Flagged by you at 05:14 - 05:24</div></div>
+    <button class="fm-close" aria-label="Close"><img src="assets/events_close.svg" alt="" /></button>
+    <div class="ev-list"><button class="ev-row"><span class="ev-name">Event</span><img src="assets/chevron_right.svg" alt="" /></button><button class="ev-row"><span class="ev-name">Arrhythmia</span><img src="assets/chevron_right.svg" alt="" /></button><button class="ev-row"><span class="ev-name">Bradycardia</span><img src="assets/chevron_right.svg" alt="" /></button><button class="ev-row"><span class="ev-name">Atrial Fibrillation</span><img src="assets/chevron_right.svg" alt="" /></button><button class="ev-row"><span class="ev-name">TBD</span><img src="assets/chevron_right.svg" alt="" /></button><button class="ev-row"><span class="ev-name">TBD</span><img src="assets/chevron_right.svg" alt="" /></button><button class="ev-row"><span class="ev-name">Custom 1</span><img src="assets/chevron_right.svg" alt="" /></button><button class="ev-row"><span class="ev-name">Custom 2</span><img src="assets/chevron_right.svg" alt="" /></button></div>
+  </div>
+
+</section>
+
+<section id="events-ecg" class="section">
+
+  <h2>Events ECG</h2>
+  <p class="sub">Flagged events list with edit. Figma 32705:68768 (light).</p>
+  <div class="fm ee">
+    <div class="ee-title">Events ECG</div>
+    <button class="fm-close" aria-label="Close"><img src="assets/events_close.svg" alt="" /></button>
+    <div class="ee-sub">The blue ones were flagged by you</div>
+    <div class="ee-list"><div class="ee-row"><div><span class="ee-flag"><img class="ee-flag-bg" src="assets/flag_bg.svg" alt="" /><img class="ee-flag-vec" src="assets/flag_vec.svg" alt="" /><b>1</b></span><div><div class="ee-name">Atrial fibrillation</div><div class="ee-time">03:48 - 03:58</div></div></div><button class="ee-edit" aria-label="Edit"><img src="assets/edit2.svg" alt="" /></button></div><div class="ee-row ee-row-blue"><div><span class="ee-flag"><img class="ee-flag-bg" src="assets/flag_bg_blue.svg" alt="" /><img class="ee-flag-vec" src="assets/flag_vec_blue.svg" alt="" /><b>2</b></span><div><div class="ee-name">Bradycardia</div><div class="ee-time">05:14 - 05:24</div></div></div><button class="ee-edit" aria-label="Edit"><img src="assets/edit2.svg" alt="" /></button></div><div class="ee-row"><div><span class="ee-flag"><img class="ee-flag-bg" src="assets/flag_bg.svg" alt="" /><img class="ee-flag-vec" src="assets/flag_vec.svg" alt="" /><b>3</b></span><div><div class="ee-name">Arrythmia</div><div class="ee-time">07:11 - 07:21</div></div></div><button class="ee-edit" aria-label="Edit"><img src="assets/edit2.svg" alt="" /></button></div></div>
+  </div>
+
+</section>
+
+<section id="exam-search" class="section">
+
+    <h2>Exam search (Find Patient)</h2>
+    <p class="sub">Patient search with chips, search field, and result cards (expanded = patient details with Select). Figma 37646:43872 (dark). Header omitted.</p>
+    <div class="scr scr-search">
+      <div class="es-left">
+        <div class="es-label">Choose how you want to search</div>
+        <div class="es-chips"><span class="es-chip">Patient ID</span><span class="es-chip">First name</span><span class="es-chip es-chip-on">Last name</span></div>
+        <div class="es-search"><img src="assets/ex_search.svg" alt="" /><span>Oliver</span><img src="assets/ex_clear.svg" alt="" /></div>
+      </div>
+      <div class="es-right">
+        <div class="es-card es-open">
+          <div class="es-head"><span class="es-av">J</span><div class="es-head-txt"><b>John Doe Oliver</b><small>Male • 49 years</small></div><img src="assets/ex_chev_up.svg" alt="" class="es-chev" /></div>
+          <div class="es-details">
+            <div class="es-col">
+              <div class="es-kv"><span>Patient ID</span><b>00314</b></div>
+              <div class="es-kv"><span>Name</span><b>John</b></div>
+              <div class="es-kv"><span>Surname</span><b>Doe Oliver</b></div>
+              <div class="es-kv"><span>Birth Date</span><b>03/04/1976</b></div>
+            </div>
+            <div class="es-col">
+              <div class="es-kv"><span>Gender at birth</span><b>Male</b></div>
+              <div class="es-kv"><span>Ethnicity</span><b>White</b></div>
+            </div>
+          </div>
+          <button class="es-select">Select</button>
+        </div>
+        <div class="es-card"><div class="es-head"><span class="es-av">M</span><div class="es-head-txt"><b>Maria Oliveira</b><small>Female • 28 years</small></div><img src="assets/ex_chev_down.svg" alt="" class="es-chev" /></div></div>
+        <div class="es-card"><div class="es-head"><span class="es-av">M</span><div class="es-head-txt"><b>Maria Oliveira</b><small>Female • 28 years</small></div><img src="assets/ex_chev_down.svg" alt="" class="es-chev" /></div></div>
+        <div class="es-card"><div class="es-head"><span class="es-av">M</span><div class="es-head-txt"><b>Maria Oliveira</b><small>Female • 28 years</small></div><img src="assets/ex_chev_down.svg" alt="" class="es-chev" /></div></div>
+        <div class="es-card"><div class="es-head"><span class="es-av">M</span><div class="es-head-txt"><b>Maria Oliveira</b><small>Female • 28 years</small></div><img src="assets/ex_chev_down.svg" alt="" class="es-chev" /></div></div>
+        <div class="es-card"><div class="es-head"><span class="es-av">M</span><div class="es-head-txt"><b>Maria Oliveira</b><small>Female • 28 years</small></div><img src="assets/ex_chev_down.svg" alt="" class="es-chev" /></div></div>
+      </div>
+    </div>
+
+</section>
+
+
+<section id="icon-button" class="section">
+
+    <h2>Icon button &amp; rail</h2>
+    <p class="sub">Vertical column docked beside the ECG viewer. Variants from Figma: default, STAT, printing, USB, transmit. Source: 37646:52164.</p>
+    <div class="row" style="align-items:flex-start;gap:var(--sp-2xl)">
+      <div class="icon-rail">
+        <button class="icon-btn" aria-label="Settings"><span class="ico ico-settings"></span></button>
+        <button class="icon-btn" aria-label="Events"><span class="count-badge">3</span><span class="ico ico-flag"></span></button>
+        <button class="icon-btn" aria-label="Ruler"><span class="ico ico-ruler"></span></button>
+        <button class="icon-btn active" aria-label="Printing"><span class="ico ico-print"></span></button>
+        <button class="icon-btn" aria-label="USB"><span class="ico ico-usb"></span></button>
+      </div>
+      <div class="row" style="gap:var(--sp-md)">
+        <button class="icon-btn" aria-label="Ruler"><span class="ico ico-ruler"></span></button>
+        <button class="icon-btn icon-btn-stat" aria-label="STAT">STAT</button>
+        <button class="icon-btn active" aria-label="Printing selected"><span class="ico ico-print"></span></button>
+        <button class="icon-btn" aria-label="USB"><span class="ico ico-usb"></span></button>
+      </div>
+    </div>
+
+</section>
+
+<section id="lead-picker" class="section">
+
+    <h2>Lead layout picker</h2>
+    <p class="sub">Two variants from Figma: 12-lead layout with Default/Confirm (32705:69209 light, 37646:31831 dark) and Rhythm Lead with priority badges (32705:69260).</p>
+    <div class="lp-row">
+      <div class="lp-frame">
+        <div class="lp-head"><div class="lp-title">Format &amp; Leads</div><div class="lp-sub">Choose 3 leads</div></div>
+        <div class="lp-card"><button class="lp-tile ">I</button><button class="lp-tile ">II</button><button class="lp-tile ">III</button><button class="lp-tile is-selected">aVR</button><button class="lp-tile ">aVF</button><button class="lp-tile is-selected">aVL</button><button class="lp-tile ">V1</button><button class="lp-tile ">V2</button><button class="lp-tile ">V3</button><button class="lp-tile ">V4</button><button class="lp-tile is-selected">V5</button><button class="lp-tile ">V6</button></div>
+        <div class="lp-actions"><button class="fm-btn fm-btn-default">Default</button><button class="fm-btn fm-btn-confirm">Confirm</button></div>
+      </div>
+      <div class="lp-frame">
+        <div class="lp-head"><div class="lp-title">Rhythm Lead</div><div class="lp-sub">Choose prioritized 3 leads</div></div>
+        <div class="lp-card"><button class="lp-tile ">I</button><button class="lp-tile ">II</button><button class="lp-tile ">III</button><button class="lp-tile ">aVR</button><button class="lp-tile ">aVF</button><button class="lp-tile ">aVL</button><span class="lp-tile-wrap"><button class="lp-tile is-selected">V1</button><span class="lp-badge">3</span></span><span class="lp-tile-wrap"><button class="lp-tile is-selected">V2</button><span class="lp-badge">2</span></span><span class="lp-tile-wrap"><button class="lp-tile is-selected">V3</button><span class="lp-badge">1</span></span><button class="lp-tile ">V4</button><button class="lp-tile ">V5</button><button class="lp-tile ">V6</button></div>
+        <div class="lp-actions"><button class="lp-btn lp-clear">Clear</button><button class="lp-btn lp-confirm">✓ Confirm</button></div>
+      </div>
+    </div>
+
+</section>
+
+<section id="mandatory" class="section">
+
+    <h2>Mandatory fields dropdown</h2>
+    <p class="sub">Form Control with "Mandatory patient fields" label and dropdown trigger that opens an overlay. The overlay has 3 accordions (Main info / Clinical info / Other info) — only ONE can be expanded at a time; opening a third collapses one previously expanded. Source: Figma Form Control.</p>
+    <div class="mf-wrap">
+      <div class="mf-label">Mandatory patient fields</div>
+      <button class="mf-trigger mf-trigger-open">
+        <span>Dropdown mandatoryFields</span>
+        <img src="assets/chevron_right.svg" alt="" class="mf-trigger-chev" />
+      </button>
+      <div class="mf-panel">
+        <!-- Main info — expanded -->
+        <div class="mf-acc mf-acc-open">
+          <button class="mf-acc-head">Main info <img src="assets/chevron_right.svg" alt="" /></button>
+          <div class="mf-acc-body">
+            <label class="mf-item"><input type="checkbox" checked /> First ID</label>
+            <label class="mf-item"><input type="checkbox" /> Second ID</label>
+            <label class="mf-item"><input type="checkbox" checked /> First name</label>
+            <label class="mf-item"><input type="checkbox" checked /> Last name</label>
+            <label class="mf-item"><input type="checkbox" /> Ethnicity</label>
+            <label class="mf-item"><input type="checkbox" checked /> Gender at birth</label>
+            <label class="mf-item"><input type="checkbox" checked /> Birth date</label>
+            <label class="mf-item"><input type="checkbox" checked /> Age</label>
+          </div>
+        </div>
+        <!-- Clinical info — collapsed -->
+        <div class="mf-acc">
+          <button class="mf-acc-head">Clinical info <img src="assets/chevron_right.svg" alt="" /></button>
+        </div>
+        <!-- Other info — collapsed -->
+        <div class="mf-acc">
+          <button class="mf-acc-head">Other info <img src="assets/chevron_right.svg" alt="" /></button>
+        </div>
+      </div>
+    </div>
+
+</section>
+
+<section id="multi-site" class="section">
+
+  <h2>Multi site</h2>
+  <p class="sub">Unit picker. Figma 32705:68806 (light, 353px).</p>
+  <div class="fm ms">
+    <div class="ms-head"><div class="fm-title">Multi site</div><div class="fm-sub">Select the unit</div></div>
+    <button class="fm-close" aria-label="Close"><img src="assets/multi_close.svg" alt="" /></button>
+    <div class="ms-list"><button class="ev-row"><span class="ev-name">Unit 1</span><img src="assets/multi_chev.svg" alt="" /></button><button class="ev-row"><span class="ev-name">Unit 2</span><img src="assets/multi_chev.svg" alt="" /></button><button class="ev-row"><span class="ev-name">Unit 3</span><img src="assets/multi_chev.svg" alt="" /></button><button class="ev-row"><span class="ev-name">Unit 4</span><img src="assets/multi_chev.svg" alt="" /></button><button class="ev-row"><span class="ev-name">Unit 5</span><img src="assets/multi_chev.svg" alt="" /></button></div>
+  </div>
+
+</section>
+
+<section id="patient-form" class="section">
+
+  <h2>Patient entry</h2>
+  <p class="sub">Patient entry, Main info (dark). Figma 37646:40570, positions measured from the node.</p>
+<div class="pf">
+      <div class="pf-task" style="left:0px;top:0px;width:1280px;height:24px"></div>
+      <div class="pf-upper" style="left:0px;top:24px;width:1280px;height:80px"></div>
+      <div class="pf-back" style="left:28px;top:40px;width:24px;height:24px">←</div>
+      <div class="pf-title" style="left:80px;top:42px;width:300px;height:24px">Unknown patient</div>
+      <div class="pf-hr" style="left:548px;top:50px;width:184px;height:30px">♡ 85</div>
+      <div class="pf-sync" style="left:856px;top:48px;width:400px;height:24px">1 exam waiting to be synced</div>
+      <div class="pf-tab is-on" data-pane="m" style="left:40px;top:124px;width:114px;height:41px">Main info</div>
+      <div class="pf-tab" data-pane="c" style="left:170px;top:124px;width:130px;height:41px">Clinical info</div>
+      <div class="pf-tab" data-pane="o" style="left:316px;top:124px;width:114px;height:41px">Other info</div>
+      <div class="pf-btn" style="left:848px;top:124px;width:120px;height:40px">Patients</div>
+      <div class="pf-btn" style="left:984px;top:124px;width:120px;height:40px">Exams</div>
+      <div class="pf-btn" style="left:1120px;top:124px;width:120px;height:40px">Worklist</div>
+      <div class="pf-lab" style="left:40px;top:197px;width:300px;height:24px">First name *</div>
+      <div class="pf-in" style="left:40px;top:241px;width:384px;height:52px">Enter first name</div>
+      <div class="pf-lab" style="left:448px;top:197px;width:300px;height:24px">Last name *</div>
+      <div class="pf-in" style="left:448px;top:241px;width:384px;height:52px">Enter last name</div>
+      <div class="pf-chip" style="left:856px;top:197px;width:192px;height:36px"></div>
+      <div class="pf-b pf-b-on" style="left:860px;top:201px;width:84px;height:28px">First ID *</div>
+      <div class="pf-sep" style="left:952px;top:205px;width:1px;height:20px"></div>
+      <div class="pf-b" style="left:960px;top:201px;width:84px;height:28px">Second ID</div>
+      <div class="pf-in" style="left:856px;top:241px;width:384px;height:52px">Enter ID number</div>
+      <div class="pf-hint-ico" style="left:856px;top:301px;width:18px;height:17px">▯</div>
+      <div class="pf-hint" style="left:882px;top:301px;width:224px;height:20px">Or scan a barcode to enter the ID.</div>
+      <div class="pf-lab" style="left:40px;top:353px;width:300px;height:24px">Date of Birth</div>
+      <div class="pf-in" style="left:40px;top:389px;width:384px;height:52px">dd/mm/yyyy</div>
+      <div class="pf-lab" style="left:448px;top:353px;width:300px;height:24px">Age *</div>
+      <div class="pf-in" style="left:448px;top:389px;width:126px;height:52px">Enter age</div>
+      <div class="pf-in" style="left:586px;top:389px;width:158px;height:52px">Years<img class="pf-chev" src="assets/chevron_right.svg" alt="" style="transform:rotate(90deg);margin-left:auto;width:16px;height:16px" /></div>
+      <div class="pf-lab" style="left:768px;top:353px;width:300px;height:24px">Gender *</div>
+      <div class="pf-seg" style="left:768px;top:389px;width:472px;height:52px;border-radius:12px"></div><div class="pf-b" style="left:774px;top:395px;width:137.33px;height:40px">Male</div><div class="pf-b" style="left:935.33px;top:395px;width:137.33px;height:40px">Female</div><div class="pf-b" style="left:1096.67px;top:395px;width:137.33px;height:40px">Other</div><div class="pf-sep" style="left:923.33px;top:403px;width:1px;height:24px"></div><div class="pf-sep" style="left:1084.67px;top:403px;width:1px;height:24px"></div>
+      <div class="pf-lab" style="left:40px;top:473px;width:300px;height:24px">Ethnicity</div>
+      <div class="pf-seg" style="left:40px;top:509px;width:1200px;height:52px;border-radius:12px"></div><div class="pf-b" style="left:46px;top:515px;width:218.4px;height:40px">Undefined</div><div class="pf-b" style="left:288.4px;top:515px;width:218.4px;height:40px">Caucasian</div><div class="pf-b" style="left:530.8px;top:515px;width:218.4px;height:40px">Black</div><div class="pf-b" style="left:773.2px;top:515px;width:218.4px;height:40px">Asian</div><div class="pf-b" style="left:1015.6px;top:515px;width:218.4px;height:40px">Other</div><div class="pf-sep" style="left:276.4px;top:523px;width:1px;height:24px"></div><div class="pf-sep" style="left:518.8px;top:523px;width:1px;height:24px"></div><div class="pf-sep" style="left:761.2px;top:523px;width:1px;height:24px"></div><div class="pf-sep" style="left:1003.6px;top:523px;width:1px;height:24px"></div>
+      <div class="pf-bar" style="left:0px;top:713px;width:1280px;height:87px"></div>
+      <div class="pf-v1" style="left:40px;top:745px;width:40px;height:24px">V1</div>
+      <div class="pf-btn2" style="left:780px;top:740px;width:118px;height:40px">Clear</div>
+      <div class="pf-btn2 pf-cancel" style="left:908px;top:740px;width:118px;height:40px">Cancel</div>
+      <div class="pf-btn2 pf-save" style="left:1036px;top:740px;width:204px;height:40px">✓ Save</div>
+      <div class="pf-alt" data-p="c" style="display:none"><div class="pf-lab" style="left:40px;top:197px">Weight (kg)</div><div class="pf-in" style="left:40px;top:241px;width:160px;height:52px">Enter weight</div><div class="pf-lab" style="left:228px;top:197px">Height (cm)</div><div class="pf-in" style="left:228px;top:241px;width:160px;height:52px">Enter height</div><div class="pf-lab" style="left:416px;top:197px">Systolic (mmHg)</div><div class="pf-in" style="left:416px;top:241px;width:160px;height:52px">Enter systolic</div><div class="pf-lab" style="left:604px;top:197px">Diastolic (mmHg)</div><div class="pf-in" style="left:604px;top:241px;width:160px;height:52px">Enter diastolic</div><div class="pf-lab" style="left:792px;top:197px">SPO2 (%)</div><div class="pf-in" style="left:792px;top:241px;width:160px;height:52px">Enter SPO2</div><div class="pf-lab" style="left:40px;top:353px">Therapy</div><div class="pf-in" style="left:40px;top:397px;width:440px;height:52px">Describe therapy</div><div class="pf-lab" style="left:40px;top:437px">Technician</div><div class="pf-in" style="left:40px;top:481px;width:440px;height:52px">Enter technician name</div><div class="pf-lab" style="left:528px;top:353px">Diagnostic query</div><div class="pf-in" style="left:528px;top:397px;width:712px;height:140px;align-items:flex-start;padding-top:8px">Describe the clinical question or suspected condition</div></div>
+      <div class="pf-alt" data-p="o" style="display:none"><div class="pf-lab" style="left:40px;top:197px">Email</div><div class="pf-in" style="left:40px;top:241px;width:320px;height:52px">name@email.com</div><div class="pf-lab" style="left:380px;top:197px">Mobile number</div><div class="pf-in" style="left:380px;top:241px;width:260px;height:52px">+00 000 000 0000</div><div class="pf-lab" style="left:656px;top:197px">Notes</div><div class="pf-in" style="left:656px;top:241px;width:584px;height:140px;align-items:flex-start;padding-top:8px">Add relevant notes about the patient</div><div class="pf-lab" style="left:40px;top:353px">Address</div><div class="pf-in" style="left:40px;top:397px;width:600px;height:52px">Street, number, city</div><div class="pf-lab" style="left:40px;top:437px">Custom field 1</div><div class="pf-in" style="left:40px;top:481px;width:320px;height:52px">Enter value</div><div class="pf-lab" style="left:380px;top:437px">Custom field 2</div><div class="pf-in" style="left:380px;top:481px;width:320px;height:52px">Enter value</div><div class="pf-lab" style="left:720px;top:437px">Custom field 3</div><div class="pf-in" style="left:720px;top:481px;width:320px;height:52px">Enter value</div></div>
+    </div>
+
+</section>
+
+<section id="patient-header" class="section">
+
+    <h2>Patient header</h2>
+    <p class="sub">Upper bar variants from Figma (37646:29782, dark). 5 variants: Unknown+menu, Section+back, Named+menu, Unknown (no sync), Section+menu.</p>
+    <div class="stack">
+
+      <!-- variant: unknown patient + menu hamburger + sync indicator -->
+      <div class="ph-bar">
+        <button class="ph-btn" aria-label="Menu"><img src="icons/menu.svg" alt="" /></button>
+        <div class="ph-patient">
+          <div class="ph-name">Unknown patient</div>
+          <div class="ph-id">Patient ID</div>
+        </div>
+        <div class="ph-hr"><img src="icons/heart.svg" alt="" /><span class="ph-hr-val">85</span></div>
+        <div class="ph-sync"><img src="icons/upload-cloud.svg" alt="" /><span>1 exam waiting to be synced</span></div>
+      </div>
+
+      <!-- variant: section + back arrow -->
+      <div class="ph-bar">
+        <button class="ph-btn" aria-label="Back"><img src="icons/icon-linear-back.svg" alt="" /></button>
+        <div class="ph-patient">
+          <div class="ph-name">Section name</div>
+          <div class="ph-id">Subtitle</div>
+        </div>
+      </div>
+
+      <!-- variant: named patient + menu + sync indicator -->
+      <div class="ph-bar">
+        <button class="ph-btn" aria-label="Menu"><img src="icons/menu.svg" alt="" /></button>
+        <div class="ph-patient">
+          <div class="ph-name">John Doe Oliver</div>
+          <div class="ph-id">ID 123456</div>
+        </div>
+        <div class="ph-hr"><img src="icons/heart.svg" alt="" /><span class="ph-hr-val">85</span></div>
+        <div class="ph-sync"><img src="icons/upload-cloud.svg" alt="" /><span>1 exam waiting to be synced</span></div>
+      </div>
+
+      <!-- variant: unknown patient + menu (no sync badge) -->
+      <div class="ph-bar">
+        <button class="ph-btn" aria-label="Menu"><img src="icons/menu.svg" alt="" /></button>
+        <div class="ph-patient">
+          <div class="ph-name">Unknown patient</div>
+          <div class="ph-id">Patient ID</div>
+        </div>
+        <div class="ph-hr"><img src="icons/heart.svg" alt="" /><span class="ph-hr-val">85</span></div>
+      </div>
+
+      <!-- variant: section + menu (dots) -->
+      <div class="ph-bar">
+        <button class="ph-btn" aria-label="Menu"><img src="icons/menu2.svg" alt="" /></button>
+        <div class="ph-patient">
+          <div class="ph-name">Section name</div>
+          <div class="ph-id">Subtitle</div>
+        </div>
+      </div>
+
+    </div>
+
+</section>
+
+<section id="pdf-toolbar" class="section">
+
+    <h2>PDF viewer toolbar</h2>
+    <p class="sub">Page navigation and zoom for the Review PDF viewer. Source: 37646:61421 (metadata only, confirm visual).</p>
+    <div class="toolbar">
+      <button class="btn btn-icon btn-ghost" aria-label="Previous page">‹</button>
+      <span class="muted">1 / 4</span>
+      <button class="btn btn-icon btn-ghost" aria-label="Next page">›</button>
+      <div class="toolbar-sep"></div>
+      <select class="select-compact" aria-label="Zoom"><option>100%</option><option>75%</option><option>50%</option></select>
+    </div>
+
+</section>
+
+<section id="quick-panel" class="section">
+
+  <h2>Quick panel</h2>
+  <p class="sub">Taskbar controller. Figma 32705:70244 (light, 444x356).</p>
+  <div class="qp">
+    <div class="qp-row"><button class="qp-power"><img src="assets/qp_power.svg" alt="Shutdown" /></button><button class="qp-settings"><img src="assets/qp_settings.svg" alt="System settings" /></button></div>
+    <div class="qp-slider"><img src="assets/qp_brightness.svg" alt="" /></div>
+    <div class="qp-slider"><img src="assets/qp_volume.svg" alt="" /></div>
+    <div class="qp-tiles">
+      <div class="qp-tile"><span class="qp-tile-ico"><img src="assets/qp_wifi.svg" alt="" /></span><span class="qp-cap">HelloNeighbors</span></div>
+      <div class="qp-tile qp-tile-off"><span class="qp-tile-ico"><img src="assets/qp_bt.svg" alt="" /></span><span class="qp-cap">Not Connected</span></div>
+      <div class="qp-tile qp-tile-mode"><span class="qp-mode-on"><img src="assets/qp_light.svg" alt="" /></span><span class="qp-mode-off"><img src="assets/qp_moon.svg" alt="" /></span><span class="qp-cap">Light mode</span></div>
+    </div>
+  </div>
+
+</section>
+
+<section id="report-modal" class="section">
+
+    <h2>Report modal</h2>
+    <p class="sub">Right-docked report panel (609px) with tabs, textarea and a segmented summary. Source: 37646:53481 (Report modal v3).</p>
+    <div class="report-panel">
+      <div class="report-head"><strong>Report</strong><button class="btn btn-icon btn-ghost" aria-label="Close">×</button></div>
+      <div class="tabs">
+        <button class="tab active">Interpretation</button>
+        <button class="tab">Physician</button>
+      </div>
+      <textarea class="report-text" aria-label="Interpretation">Synus rhythm
+--- Interpretation made without knowing patient's age/gender ---
+Normal ECG</textarea>
+      <div class="field">
+        <label>Summary</label>
+        <div class="segmented segmented-full">
+          <button class="seg active">Abnormal</button>
+          <button class="seg">Normal</button>
+          <button class="seg">Unknown</button>
+          <button class="seg">Borderline</button>
+        </div>
+      </div>
+    </div>
+
+</section>
+
+<section id="scheduled-setup" class="section">
+
+  <h2>Scheduled setup</h2>
+  <p class="sub">Modal for scheduled recording. Figma 32705:70073 (light, 360px).</p>
+  <div class="fm sched">
+    <div class="fm-head" style="top:24px"><div class="fm-title">Scheduled Setup</div></div>
+    <button class="fm-close" aria-label="Close" style="top:8px;right:8px"><img src="assets/sched_close.svg" alt="" /></button>
+    <div class="sched-body">
+      <div class="field-f"><label>Start delay (seconds)</label><div class="sel-f">30</div><div class="chips-f"><span class="chip-f">-30s</span><span class="chip-f">-10s</span><span class="chip-f chip-f-add">+10s</span><span class="chip-f chip-f-add">+30s</span></div></div>
+      <div class="field-f"><label>Recording time (minutes)</label><div class="sel-f">30</div><span class="hint-f">max 30 minutes</span><div class="chips-f"><span class="chip-f">-5min</span><span class="chip-f">-1min</span><span class="chip-f chip-f-add">+1min</span><span class="chip-f chip-f-add">+5min</span></div></div>
+      <div class="field-f"><label>Number of ECG per recording time</label><div class="sel-f">1</div><div class="chips-f"><span class="chip-f">-5</span><span class="chip-f">-1</span><span class="chip-f chip-f-add">+1</span><span class="chip-f chip-f-add">+5</span></div></div>
+    </div>
+  </div>
+
+</section>
+
+<section id="setting-title" class="section">
+
+    <h2>Setting title</h2>
+    <p class="sub">Row header with icon, title and trailing action. Source: 37646:35595 (metadata only, confirm visual).</p>
+    <div class="setting-title">
+      <span class="setting-ico">⚙</span>
+      <span class="setting-name">Visualization settings</span>
+      <button class="btn btn-ghost btn-sm">Reset</button>
+    </div>
+
+</section>
+
+<section id="settings-light" class="section">
+
+  <h2>Settings (full screen)</h2>
+  <p class="sub">Settings application screen, light. Figma 32705:69637.</p>
+  <div class="scr scr-settings">
+    <div class="scr-top"><button class="scr-back" aria-label="Back"><img src="assets/set_back.svg" alt="" /></button><span class="scr-title">Settings</span><button class="scr-print"><img src="assets/set_print.svg" alt="" />Print</button></div>
+    <div class="scr-rail"><div class="set-item is-active"><img class="settings-icon" src="assets/settings_general.svg" alt="" /><span><b>General settings</b><small>Patient fields • Units of measure</small></span></div><div class="set-item"><span class="settings-icon-stack"><img src="assets/settings_ecg.svg" alt="" /><img src="assets/settings_ecg_wave.svg" class="settings-icon-overlay" alt="" /></span><span><b>Real time ECG</b><small>Stat options • Default view</small></span></div><div class="set-item"><img class="settings-icon" src="assets/settings_auto.svg" alt="" /><span><b>Auto</b><small>Speed • Leads • Extra</small></span></div><div class="set-item"><img class="settings-icon" src="assets/settings_rhythm.svg" alt="" /><span><b>Rhythm</b><small>Leads • Speed • Gain</small></span></div><div class="set-item"><img class="settings-icon" src="assets/settings_connectivity.svg" alt="" /><span><b>Connectivity</b><small>Protocol configuration</small></span></div><div class="set-item"><img class="settings-icon" src="assets/settings_license.svg" alt="" /><span><b>License</b><small>Type of interpretation • Privacy</small></span></div><div class="set-item"><img class="settings-icon" src="assets/settings_security.svg" alt="" /><span><b>Security</b><small>PIN</small></span></div><div class="set-item"><span class="settings-icon-stack"><img src="assets/settings_maintenance.svg" alt="" /><img src="assets/settings_tool.svg" class="settings-icon-overlay" alt="" /></span><span><b>Maintenance</b><small>Software Reset • System Log</small></span></div></div>
+    <div class="scr-form">
+      <div class="ff-grid"><div class="ff"><label>Default lead format</label><div class="sel-f">6x2<img src="assets/set_chev.svg" alt="" /></div></div><div class="ff"><label>Extra copies</label><div class="sel-f">2<img src="assets/set_chev.svg" alt="" /></div></div><div class="ff"><label>Default Rhythm Lead</label><div class="sel-f">II - V2 - V5<img src="assets/set_chev.svg" alt="" /></div></div><div class="ff"><label>Lead extra preset</label><div class="sel-f">Posterior<img src="assets/set_chev.svg" alt="" /></div></div><div class="ff"><label>Speed mm/s</label><div class="sel-f">25<img src="assets/set_chev.svg" alt="" /></div></div><div class="ff"><label>Extra Lead #1</label><div class="sel-f">V7<img src="assets/set_chev.svg" alt="" /></div></div><div class="ff ff-toggle"><label>Automatic print</label><span class="ss-switch"><i></i></span></div><div class="ff"><label>Extra Lead #2</label><div class="sel-f">V8<img src="assets/set_chev.svg" alt="" /></div></div><div class="ff ff-toggle is-on"><label>Store filtered ECG</label><span class="ss-switch"><i></i></span></div><div class="ff"><label>Extra Lead #3</label><div class="sel-f">V9<img src="assets/set_chev.svg" alt="" /></div></div><div class="ff ff-toggle"><label>QTcB</label><span class="ss-switch"><i></i></span></div><div class="ff ff-toggle"><label>Median page in PDF</label><span class="ss-switch"><i></i></span></div><div class="ff ff-toggle"><label>QTcF</label><span class="ss-switch"><i></i></span></div><div class="ff"><label>Automatic interpretation</label><div class="sel-f">Extended<img src="assets/set_chev.svg" alt="" /></div></div><div class="ff ff-toggle is-on"><label>Auto Stat</label><span class="ss-switch"><i></i></span></div><div class="ff ff-toggle"><label>Exam status on printout</label><span class="ss-switch"><i></i></span></div></div>
+      <div class="scr-actions"><button class="btn-cancel">Cancel</button><button class="btn-save">Save</button></div>
+    </div>
+  </div>
+
+</section>
+
+<section id="settings-list" class="section">
+
+    <h2>Settings list</h2>
+    <p class="sub">Left-rail categories + right detail — as in the Settings application screen.</p>
+    <div class="settings-shell">
+      <aside class="settings-rail">
+        <div class="settings-group">General</div>
+        <button class="settings-item active">
+          <img src="assets/settings_general.svg" class="settings-icon" alt="General" />
+          <span class="settings-label">
+            <span class="settings-title">General settings</span>
+            <span class="settings-desc">Patient fields • Units of measure</span>
+          </span>
+        </button>
+        <button class="settings-item">
+          <span class="settings-icon-stack"><img src="assets/settings_ecg.svg" alt="" /><img src="assets/settings_ecg_wave.svg" class="settings-icon-overlay" alt="ECG" /></span>
+          <span class="settings-label">
+            <span class="settings-title">Real time ECG</span>
+            <span class="settings-desc">Stat options • Default view</span>
+          </span>
+        </button>
+        <button class="settings-item">
+          <img src="assets/settings_auto.svg" class="settings-icon" alt="Auto" />
+          <span class="settings-label">
+            <span class="settings-title">Auto</span>
+            <span class="settings-desc">Speed • Leads • Extra</span>
+          </span>
+        </button>
+        <button class="settings-item">
+          <img src="assets/settings_rhythm.svg" class="settings-icon" alt="Rhythm" />
+          <span class="settings-label">
+            <span class="settings-title">Rhythm</span>
+            <span class="settings-desc">Manual events</span>
+          </span>
+        </button>
+        <button class="settings-item">
+          <img src="assets/settings_connectivity.svg" class="settings-icon" alt="Connectivity" />
+          <span class="settings-label">
+            <span class="settings-title">Connectivity</span>
+            <span class="settings-desc">Protocol configuration</span>
+          </span>
+        </button>
+        <button class="settings-item">
+          <img src="assets/settings_license.svg" class="settings-icon" alt="License" />
+          <span class="settings-label">
+            <span class="settings-title">License</span>
+            <span class="settings-desc">Type of interpretation • Privacy</span>
+          </span>
+        </button>
+        <button class="settings-item">
+          <img src="assets/settings_security.svg" class="settings-icon" alt="Security" />
+          <span class="settings-label">
+            <span class="settings-title">Security</span>
+            <span class="settings-desc">PIN</span>
+          </span>
+        </button>
+        <button class="settings-item">
+          <span class="settings-icon-stack"><img src="assets/settings_maintenance.svg" alt="" /><img src="assets/settings_tool.svg" class="settings-icon-overlay" alt="Maintenance" /></span>
+          <span class="settings-label">
+            <span class="settings-title">Maintenance</span>
+            <span class="settings-desc">Software Reset • System Log</span>
+          </span>
+        </button>
+      </aside>
+      <div class="settings-detail">
+        <h3 style="margin-top:0;text-transform:none;letter-spacing:0;color:var(--color-foreground);font-size:17px">General settings</h3>
+        <div class="field"><label>Site name</label><input type="text" value="Cardiology — Ward 3" /></div>
+        <div class="field"><label>Default lead count</label>
+          <div class="segmented">
+            <button class="seg active">12 leads</button>
+            <button class="seg">15 leads</button>
+          </div>
+        </div>
+        <div class="field"><label class="switch-row"><span class="switch"><input type="checkbox" checked /><span class="switch-track"><span class="switch-thumb"></span></span></span> Auto-save acquisitions</label></div>
+        <div class="field"><label class="switch-row"><span class="switch"><input type="checkbox" /><span class="switch-track"><span class="switch-thumb"></span></span></span> Prompt before deleting</label></div>
+      </div>
+    </div>
+
+</section>
+
+<section id="system-settings" class="section">
+
+  <h2>System settings</h2>
+  <p class="sub">Modal with category list and form. Figma 32705:64008 (light, 776x562).</p>
+  <div class="ss">
+    <div class="ss-title">System Settings</div>
+    <button class="ss-close" aria-label="Close"><img src="assets/sys_close.svg" alt="" /></button>
+    <div class="ss-nav">
+      <div class="ss-item"><span class="ss-ico">A</span><span><b>Language</b><small>Let's configure your device</small></span></div>
+      <div class="ss-item is-active"><span class="ss-ico">◍</span><span><b>Country &amp; time zone</b><small>Choose your region</small></span></div>
+      <div class="ss-item"><span class="ss-ico">◠</span><span><b>Connectivity</b><small>Connect your network</small></span></div>
+      <div class="ss-item"><span class="ss-ico">ᛒ</span><span><b>Device Connection</b><small>Bluetooth &amp; Printer</small></span></div>
+      <div class="ss-item"><span class="ss-ico">▭</span><span><b>System</b><small>System management</small></span></div>
+    </div>
+    <div class="ss-form">
+      <div class="ss-toggle-row"><span>Set time and date automatically</span><span class="ss-switch"><i></i></span></div>
+      <div class="ss-field"><label>Country</label><div class="ss-select"><span>Italia</span><img src="assets/sys_chev.svg" alt="" /></div></div>
+      <div class="ss-field"><label>Time zone</label><div class="ss-select"><span>(UTC+01:00) Amsterdam, Berlin...</span><img src="assets/sys_chev.svg" alt="" /></div></div>
+      <div class="ss-field"><label>Date</label><div class="ss-input">13/11/2024</div></div>
+      <div class="ss-field"><label>Time</label><div class="ss-select"><span>13:45</span><img src="assets/sys_chev.svg" alt="" /></div></div>
+    </div>
+  </div>
+
+</section>
+
+<section id="workflow" class="section">
+
+    <h2>Workflow assistant</h2>
+    <p class="sub">360px right-docked panel. Variants: default, thinking, message, pdf. More workflows panel below. Source: 37646:61237, 37646:61321, 37646:61276.</p>
+    <div class="row" style="align-items:flex-start;gap:var(--sp-2xl)">
+      <div class="wf-panel">
+        <div class="wf-head"><span>✦ Workflow Assistant</span><button class="btn btn-icon btn-ghost" aria-label="Close">×</button></div>
+        <p class="muted" style="margin:0">Welcome to MindBridge, your AI analysis workspace.</p>
+        <p class="muted" style="margin:0">Select a workflow</p>
+        <button class="wf-card selected">Cardiolife<img class="wf-arrow" src="assets/chevron_right.svg" alt="" /></button>
+        <button class="wf-card">PM Cardio<img class="wf-arrow" src="assets/chevron_right.svg" alt="" /></button>
+        <button class="wf-link">More workflows</button>
+      </div>
+      <div class="wf-panel">
+        <div class="wf-head"><span>✦ Workflow Assistant</span><button class="btn btn-icon btn-ghost" aria-label="Close">×</button></div>
+        <div class="wf-bubble">Analysis is running…</div>
+        <div class="row" style="gap:var(--sp-sm)"><span class="spinner"></span><span class="muted">Thinking</span></div>
+      </div>
+    </div>
+    <h3>More workflows</h3>
+    <div class="wf-panel">
+      <div class="wf-head"><span>More workflows</span><button class="btn btn-icon btn-ghost" aria-label="Close">×</button></div>
+      <input class="wf-search" type="search" placeholder="Search" aria-label="Search workflows" />
+      <button class="wf-card">Cardiolife<img class="wf-arrow" src="assets/chevron_right.svg" alt="" /></button>
+      <button class="wf-card">PM Cardio<img class="wf-arrow" src="assets/chevron_right.svg" alt="" /></button>
+    </div>
+
+</section>
+
+</main>
+<script>
+  (function(){var r=document.documentElement,b=document.getElementById('themeToggle'),l=document.getElementById('themeLabel');
+  function swapECG(t){
+    // Dark naming: ecg12d_<L|R><0-5>_<a|b|c>.svg (per-row for every position)
+    // Light naming: _a and _b are SHARED across rows (ecg12l_L_a, ecg12l_R_b),
+    //               only _c is per-row (ecg12l_L0_c ... L5_c, R0_c ... R5_c).
+    // Store the original DARK path on first load and derive both forms from there.
+    document.querySelectorAll('.e12 img').forEach(function(img){
+      var orig=img.getAttribute('data-src-dark');
+      if(!orig){ orig=img.getAttribute('src'); img.setAttribute('data-src-dark',orig); }
+      if(t==='dark'){ img.setAttribute('src',orig); return; }
+      // light mode: translate ecg12d_<side><row>_<pos> → ecg12l_<side>_<pos> for a|b,
+      //             or ecg12l_<side><row>_c for c.
+      img.setAttribute('src', orig.replace(/ecg12d_([LR])([0-5])_([abc])\.svg/, function(_,side,row,pos){
+        return pos==='c' ? ('ecg12l_'+side+row+'_c.svg') : ('ecg12l_'+side+'_'+pos+'.svg');
+      }));
+    });
+  }
+  function a(t){r.setAttribute('data-theme',t);if(l)l.textContent=t==='dark'?'Dark':'Light';try{localStorage.setItem('anchor-ds-theme',t)}catch(e){}swapECG(t);}
+  var s=null;try{s=localStorage.getItem('anchor-ds-theme')}catch(e){}if(s)a(s);else swapECG(r.getAttribute('data-theme')||'dark');
+  if(b)b.addEventListener('click',function(){a(r.getAttribute('data-theme')==='dark'?'light':'dark')});})();
+</script>
+<script>
+  document.querySelectorAll('.nav-item').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      a.classList.add('active');
+    });
+  });
+  /* Data table: sort on header click, select row on click */
+  (() => {
+    const table = document.getElementById('dsTable');
+    if (!table) return;
+    const headers = [...table.querySelectorAll('th[data-sort]')];
+    const tbody = table.querySelector('tbody');
+    headers.forEach((th, idx) => {
+      th.addEventListener('click', () => {
+        const next = th.classList.contains('sort-asc') ? 'desc' : 'asc';
+        headers.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+        th.classList.add('sort-' + next);
+        const col = [...th.parentElement.children].indexOf(th);
+        const rows = [...tbody.rows];
+        rows.sort((a, b) => {
+          const r = a.cells[col].textContent.trim().localeCompare(b.cells[col].textContent.trim(), undefined, { numeric: true });
+          return next === 'asc' ? r : -r;
+        });
+        rows.forEach(r => tbody.appendChild(r));
+      });
+    });
+    const multi = document.querySelector('.table-multi');
+    let multiOn = false;
+    if (multi) multi.addEventListener('click', () => {
+      multiOn = !multiOn;
+      multi.setAttribute('aria-pressed', String(multiOn));
+    });
+    [...tbody.rows].forEach(row => row.addEventListener('click', e => {
+      if (e.target.closest('button')) return;
+      if (multiOn) { row.classList.toggle('is-selected'); return; }
+      [...tbody.rows].forEach(r => r.classList.remove('is-selected'));
+      row.classList.add('is-selected');
+    }));
+  })();
+  /* Segmented control navigation */
+  document.querySelectorAll('.segmented').forEach(group => {
+    const buttons = group.querySelectorAll('.seg');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  });
+  /* Single-select groups in Figma frames and settings rail */
+  document.querySelectorAll('.fm-tabs, .fm-chips, .vz-row, .settings-rail').forEach(group => {
+    const isSelected = group.classList.contains('fm-chips') || group.classList.contains('vz-row');
+    const cls = isSelected ? 'is-selected' : 'active';
+    const items = [...group.querySelectorAll(group.classList.contains('settings-rail') ? '.settings-item' : ':scope > button')]
+      .filter(b => group.classList.contains('settings-rail') || !b.querySelector('img'));
+    items.forEach(b => b.addEventListener('click', () => {
+      items.forEach(x => x.classList.remove(cls));
+      b.classList.add(cls);
+    }));
+  });
+  /* Leads tiles: multi-select toggle */
+  document.querySelectorAll('.fm-card > .fm-tile').forEach(b => {
+    b.addEventListener('click', () => b.classList.toggle('is-selected'));
+  });
+  /* Toast: replace, never stack; auto-dismiss ~4.5 s */
+  (() => {
+    let active = null, timer = null;
+    const icons = {
+      info: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="8.01"/><line x1="12" y1="11" x2="12" y2="16"/></svg>',
+      success: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>',
+      error: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>',
+      warning: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16" x2="12" y2="16.01"/></svg>'
+    };
+    const closeSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
+    window.showToast = function (type, message, action) {
+      const stack = document.getElementById('toastStack');
+      if (active) { clearTimeout(timer); active.remove(); active = null; }
+      const el = document.createElement('div');
+      el.className = 'toast ' + type;
+      el.innerHTML = '<span class="icon">' + icons[type] + '</span><div class="body"><p class="message"></p>' + (action ? '<a href="#" class="link"></a>' : '') + '</div><span class="close">' + closeSvg + '</span>';
+      el.querySelector('.message').textContent = message;
+      if (action) el.querySelector('.link').textContent = action;
+      stack.appendChild(el);
+      active = el;
+      requestAnimationFrame(() => el.classList.add('show'));
+      const dismiss = () => {
+        el.classList.remove('show');
+        setTimeout(() => { el.remove(); if (active === el) active = null; }, 600);
+      };
+      el.querySelector('.close').onclick = dismiss;
+      timer = setTimeout(dismiss, 4500);
+    };
+  })();
+  /* Code blocks: accordion + ghost copy (Beat 2 look) */
+  (() => {
+    const skip = ['icons','colors','typography','spacing','loading'];
+    document.querySelectorAll('section.section').forEach(sec => {
+      if (skip.includes(sec.id)) return;
+      const nodes = [...sec.children].filter(n => n.tagName !== 'H2' && !(n.tagName === 'P' && n.classList.contains('sub')));
+      if (!nodes.length) return;
+      const html = nodes.map(n => n.outerHTML).join('\n');
+      const det = document.createElement('details');
+      det.className = 'code-accordion';
+      det.innerHTML = '<summary><span class="code-caret">›</span><span class="code-label">HTML</span><button class="btn-ghost-copy" type="button">Copy</button></summary><pre class="code-pre"><code></code></pre>';
+      det.querySelector('code').textContent = html;
+      const btn = det.querySelector('button');
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault(); e.stopPropagation();
+        try { await navigator.clipboard.writeText(html); }
+        catch (_) { const ta = document.createElement('textarea'); ta.value = html; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+        btn.textContent = 'Copied'; btn.classList.add('is-ok');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('is-ok'); }, 1500);
+      });
+      sec.appendChild(det);
+    });
+  })();
+  /* Patient entry tabs */
+  document.querySelectorAll('.pe-tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.pe-tab').forEach(x => x.classList.remove('is-active'));
+    t.classList.add('is-active');
+    document.querySelectorAll('.pe-pane').forEach(p => p.classList.toggle('is-on', p.dataset.p === t.dataset.pane));
+  }));
+  document.querySelectorAll('.pe-seg').forEach(g => g.querySelectorAll('.pe-seg-b').forEach(b => b.addEventListener('click', () => {
+    g.querySelectorAll('.pe-seg-b').forEach(x => x.classList.remove('is-on'));
+    b.classList.add('is-on');
+  })));
+  document.querySelectorAll('.pf > div:not(.pf-alt):not(.pf-tab):not(.pf-btn):not(.pf-bar):not(.pf-task):not(.pf-upper):not(.pf-back):not(.pf-title):not(.pf-hr):not(.pf-sync):not(.pf-v1):not(.pf-btn2)').forEach(e => e.classList.add('pf-main'));
+  document.querySelectorAll('.pf-tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.pf-tab').forEach(x => x.classList.toggle('is-on', x === t));
+    const pane = t.dataset.pane;
+    document.querySelectorAll('.pf-alt').forEach(x => x.style.display = x.dataset.p === pane ? 'block' : 'none');
+    document.querySelectorAll('.pf-main').forEach(x => x.style.display = pane === 'm' ? '' : 'none');
+  }));
+</script>
+</body>
+</html>

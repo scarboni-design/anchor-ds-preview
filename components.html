@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Components — Anchor DS</title>
+<link rel="stylesheet" href="tokens.css?v=5" />
+<link rel="stylesheet" href="styles.css?v=5" />
+<link rel="stylesheet" href="shell.css?v=5" />
+</head>
+<body data-page="components">
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="brand" style="text-decoration:none;color:inherit"><span class="brand-dot"></span><span>Anchor DS</span><span class="badge badge-neutral">Preview · v0.1</span></a>
+  </div>
+  <div class="topbar-right">
+    <button class="btn btn-ghost btn-sm" id="themeToggle" aria-label="Toggle theme"><span class="theme-icon">◐</span> <span id="themeLabel">Dark</span></button>
+  </div>
+</header>
+<nav class="sidenav">
+  <div class="nav-sep">Design System</div>
+  <a href="index.html" class="nav-item">Overview</a>
+  <a href="foundations.html" class="nav-item">Foundations</a>
+  <a href="components.html" class="nav-item active">Components</a>
+  <a href="blocks.html" class="nav-item">Blocks</a>
+  <div class="nav-sep">On this page</div>
+  <a href="#breadcrumb" class="nav-item nav-sub">Breadcrumb</a>
+  <a href="#table" class="nav-item nav-sub">Data table</a>
+  <a href="#dropdown" class="nav-item nav-sub">Dropdown menu</a>
+  <a href="#empty" class="nav-item nav-sub">Empty state</a>
+  <a href="#iconbutton" class="nav-item nav-sub">Icon button · Printer</a>
+  <a href="#stat" class="nav-item nav-sub">STAT button</a>
+  <a href="#eventbutton" class="nav-item nav-sub">Event button</a>
+  <a href="#loading" class="nav-item nav-sub">Loading</a>
+  <a href="#pagination" class="nav-item nav-sub">Pagination</a>
+  <a href="#progress" class="nav-item nav-sub">Progress</a>
+  <a href="#slider" class="nav-item nav-sub">Slider</a>
+  <a href="#switch" class="nav-item nav-sub">Switch</a>
+  <a href="#tabs" class="nav-item nav-sub">Tabs</a>
+  <a href="#toast" class="nav-item nav-sub">Toast</a>
+  <a href="#tooltip" class="nav-item nav-sub">Tooltip</a>
+</nav>
+<main class="content">
+<div class="page-head"><h1>Components</h1></div>
+
+<section id="breadcrumb" class="section">
+
+
+    <h2>Breadcrumb</h2>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="#">Settings</a>
+      <span class="crumb-sep">/</span>
+      <a href="#">Device</a>
+      <span class="crumb-sep">/</span>
+      <span aria-current="page">Connectivity</span>
+    </nav>
+</section>
+
+<section id="table" class="section">
+
+
+    <h2>Data table</h2>
+    <p class="sub">Exam list table — the <b>standard reference for the entire project</b>. Figma: <code>37646-31514</code> (table) · <code>37646-31499</code> (search bar). New rows the user hasn't viewed yet render with <b>bold text on a black row</b>.</p>
+
+    <style>
+      /* Toolbar */
+      .dt-toolbar { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin: 12px 0 6px; flex-wrap: wrap; }
+      .dt-search-group { display:flex; gap:12px; align-items:flex-start; flex-wrap: wrap; }
+      .dt-search-box {
+        position: relative; width: 408px; max-width: 100%; height: 40px;
+        background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.24);
+        border-radius: 6px; display:flex; align-items:center; gap: 8px; padding: 0 12px;
+      }
+      [data-theme="light"] .dt-search-box { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.16); }
+      .dt-search-box .dt-ico { width:20px; height:20px; background: currentColor;
+        -webkit-mask: url(assets/dt_search.svg) no-repeat center / contain;
+                mask: url(assets/dt_search.svg) no-repeat center / contain; opacity:.64; }
+      .dt-search-box input {
+        flex:1; height: 100%; background: transparent; border: 0; outline: 0;
+        color: var(--color-foreground); font: 400 14px/1.5 Inter, system-ui, sans-serif;
+      }
+      .dt-search-box input::placeholder { color: color-mix(in srgb, var(--color-foreground), transparent 36%); }
+      .dt-count { margin: 6px 0 14px; font: 400 14px/1.5 Inter, system-ui, sans-serif;
+        color: color-mix(in srgb, var(--color-foreground), transparent 52%); }
+
+      /* Dark pill buttons (Filter / Multi-select / Deselect / Refresh) */
+      .dt-pill {
+        display:inline-flex; align-items:center; gap:8px; height: 40px; padding: 0 12px;
+        background: #252525; color: rgba(255,255,255,0.92);
+        border: 0; border-radius: 6px; cursor: pointer;
+        font: 600 16px/24px Inter, system-ui, sans-serif;
+      }
+      [data-theme="light"] .dt-pill { background: #e5e7eb; color: #111; }
+      .dt-pill .dt-ico { width: 24px; height: 24px; background: currentColor;
+        -webkit-mask-size: contain; mask-size: contain;
+        -webkit-mask-position: center; mask-position: center;
+        -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+      .dt-pill.has-filter .dt-ico { -webkit-mask-image: url(assets/dt_filter.svg); mask-image: url(assets/dt_filter.svg); }
+      .dt-pill .dt-check {
+        width:16px; height:16px; border: 1.8px solid currentColor; border-radius: 4px;
+        display:inline-block; position: relative;
+      }
+      .dt-pill.checked .dt-check { background: #FB8500; border-color: #FB8500; }
+      .dt-pill.checked .dt-check::after {
+        content:""; position:absolute; left:3px; top:0; width:5px; height:9px;
+        border-right: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(45deg);
+      }
+
+      /* Table */
+      .dt-table-wrap {
+        background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px; padding: 8px;
+      }
+      [data-theme="light"] .dt-table-wrap { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.08); }
+      table.dt-table { width: 100%; border-collapse: collapse; font: 400 14px/1.5 Inter, system-ui, sans-serif; }
+      .dt-table { table-layout: auto; }
+      .dt-table th {
+        height: 40px; padding: 0 8px; text-align: left;
+        background: rgba(0,0,0,0.36); color: #fff;
+        border-bottom: 1px solid rgba(255,255,255,0.36);
+        font: 700 12px/40px Inter, system-ui, sans-serif;
+        text-transform: uppercase; letter-spacing: 0.6px;
+        white-space: nowrap; user-select: none;
+      }
+      [data-theme="light"] .dt-table th { background: rgba(0,0,0,0.08); color: #111; border-bottom-color: rgba(0,0,0,0.16); }
+      .dt-table th.sortable { cursor: pointer; }
+      .dt-table th.sortable .dt-sorter {
+        display:inline-block; width: 11px; height: 11px; margin-left: 6px; vertical-align: middle;
+        background: currentColor; opacity: .64;
+        -webkit-mask: url(assets/dt_sort_down.svg) no-repeat center / contain;
+                mask: url(assets/dt_sort_down.svg) no-repeat center / contain;
+      }
+      .dt-table th.sort-asc  .dt-sorter { -webkit-mask-image: url(assets/dt_sort_up.svg);   mask-image: url(assets/dt_sort_up.svg); opacity:1; color: #FB8500; }
+      .dt-table th.sort-desc .dt-sorter { -webkit-mask-image: url(assets/dt_sort_down.svg); mask-image: url(assets/dt_sort_down.svg); opacity:1; color: #FB8500; }
+
+      .dt-table td {
+        height: 52px; padding: 0 8px;
+        color: #fff;
+        font: 400 14px/1.5 Inter, system-ui, sans-serif;
+        border: 0; white-space: nowrap;
+      }
+      [data-theme="light"] .dt-table td { color: #1f2937; }
+      .dt-table tbody tr:nth-child(even) td { background: rgba(255,255,255,0.04); }
+      .dt-table tbody tr:nth-child(odd)  td { background: rgba(255,255,255,0.16); }
+      [data-theme="light"] .dt-table tbody tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+      [data-theme="light"] .dt-table tbody tr:nth-child(odd)  td { background: rgba(0,0,0,0.06); }
+      .dt-table tr.dt-new td { background: #000 !important; color: #fff; font-weight: 700; }
+
+      /* Checkbox column */
+      .dt-table th.col-check, .dt-table td.col-check { width: 62px; text-align: center; }
+      .dt-cb { width:20px; height:20px; display:inline-block; vertical-align:middle;
+        border: 2px solid rgba(255,255,255,0.36); border-radius: 4px; }
+      [data-theme="light"] .dt-cb { border-color: rgba(0,0,0,0.5); }
+
+      /* Exam type — STAT exams show the red ambulance glyph after the text, no box */
+      .dt-exam { display:inline-flex; align-items:center; gap: 6px; }
+      .dt-exam .dt-stat {
+        display:inline-block; width: 18px; height: 18px; background: #E53E3E;
+        -webkit-mask: url(assets/stat_glyph.svg) no-repeat center / contain;
+                mask: url(assets/stat_glyph.svg) no-repeat center / contain;
+      }
+
+      /* Status pills — text white, only the icon carries the status color */
+      .dt-status { display:inline-flex; align-items:center; gap: 6px; font-weight: 500; color: #fff; }
+      [data-theme="light"] .dt-status { color: #111; }
+      .dt-status .dt-s-ico { width:18px; height:18px;
+        -webkit-mask-size: contain; mask-size: contain;
+        -webkit-mask-position: center; mask-position: center;
+        -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+      .dt-status.notsynced  .dt-s-ico { background: #FED7D7; -webkit-mask-image: url(assets/dt_cloud_off.svg);    mask-image: url(assets/dt_cloud_off.svg); }
+      .dt-status.inprogress .dt-s-ico { background: #FB8500; -webkit-mask-image: url(assets/dt_upload_cloud.svg); mask-image: url(assets/dt_upload_cloud.svg); }
+      .dt-status.synced     .dt-s-ico { background: #38A169; -webkit-mask-image: url(assets/dt_upload_cloud.svg); mask-image: url(assets/dt_upload_cloud.svg); }
+
+      /* Row actions */
+      .dt-actions-btn {
+        width:28px; height:28px; border:0; background: transparent; cursor: pointer;
+        color: inherit; font-size: 20px; line-height: 1; border-radius: 4px;
+      }
+      .dt-actions-btn:hover { background: rgba(255,255,255,0.08); }
+    </style>
+
+    <div class="dt-toolbar">
+      <div class="dt-search-group">
+        <div class="dt-search-box">
+          <span class="dt-ico"></span>
+          <input type="search" placeholder="Search exams..." aria-label="Search">
+        </div>
+        <button class="dt-pill has-filter"><span class="dt-ico"></span>Filter</button>
+      </div>
+      <button class="dt-pill"><span class="dt-check"></span>Multi-select</button>
+    </div>
+    <div class="dt-count">Showing 7 of 100 exams</div>
+
+    <div class="dt-table-wrap">
+      <table class="dt-table" id="dsTable">
+        <thead>
+          <tr>
+            <th class="col-check"><span class="dt-cb"></span></th>
+            <th class="sortable" data-sort="text">ID<span class="dt-sorter"></span></th>
+            <th class="sortable" data-sort="text">Name<span class="dt-sorter"></span></th>
+            <th class="sortable" data-sort="text">Birthday<span class="dt-sorter"></span></th>
+            <th class="sortable" data-sort="text">Gender<span class="dt-sorter"></span></th>
+            <th class="sortable" data-sort="text">Exam type<span class="dt-sorter"></span></th>
+            <th class="sortable" data-sort="text">Acquisition date<span class="dt-sorter"></span></th>
+            <th class="sortable" data-sort="text">Confirmation<span class="dt-sorter"></span></th>
+            <th class="sortable" data-sort="text">Status<span class="dt-sorter"></span></th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="dt-new">
+            <td class="col-check"><span class="dt-cb"></span></td>
+            <td>387299</td><td>John Doe Oliver</td><td>dd/mm/yy</td><td>Male</td>
+            <td><span class="dt-exam">rhythm ecg<span class="dt-stat" title="STAT"></span></span></td>
+            <td>dd/mm/yy</td><td>unconfirmed</td>
+            <td><span class="dt-status notsynced"><span class="dt-s-ico"></span>not synced</span></td>
+            <td><button class="dt-actions-btn" aria-label="Actions">⋯</button></td>
+          </tr>
+          <tr>
+            <td class="col-check"><span class="dt-cb"></span></td>
+            <td>487283</td><td>Unknown patient</td><td>dd/mm/yy</td><td>Female</td>
+            <td><span class="dt-exam">rhythm ecg<span class="dt-stat" title="STAT"></span></span></td>
+            <td>dd/mm/yy</td><td>confirmed</td>
+            <td><span class="dt-status notsynced"><span class="dt-s-ico"></span>not synced</span></td>
+            <td><button class="dt-actions-btn" aria-label="Actions">⋯</button></td>
+          </tr>
+          <tr>
+            <td class="col-check"><span class="dt-cb"></span></td>
+            <td>123456</td><td>Unknown patient</td><td>dd/mm/yy</td><td>Male</td>
+            <td>resting ecg</td>
+            <td>dd/mm/yy</td><td>unconfirmed</td>
+            <td><span class="dt-status notsynced"><span class="dt-s-ico"></span>not synced</span></td>
+            <td><button class="dt-actions-btn" aria-label="Actions">⋯</button></td>
+          </tr>
+          <tr>
+            <td class="col-check"><span class="dt-cb"></span></td>
+            <td>654321</td><td>Maria Oliveira</td><td>dd/mm/yy</td><td>Female</td>
+            <td>rhythm ecg</td>
+            <td>dd/mm/yy</td><td>unconfirmed</td>
+            <td><span class="dt-status notsynced"><span class="dt-s-ico"></span>not synced</span></td>
+            <td><button class="dt-actions-btn" aria-label="Actions">⋯</button></td>
+          </tr>
+          <tr>
+            <td class="col-check"><span class="dt-cb"></span></td>
+            <td>302852</td><td>Lorenzo Musetti</td><td>dd/mm/yy</td><td>Male</td>
+            <td>resting ecg</td>
+            <td>dd/mm/yy</td><td>confirmed</td>
+            <td><span class="dt-status synced"><span class="dt-s-ico"></span>synced</span></td>
+            <td><button class="dt-actions-btn" aria-label="Actions">⋯</button></td>
+          </tr>
+          <tr>
+            <td class="col-check"><span class="dt-cb"></span></td>
+            <td>564738</td><td>Greta Van Fleet</td><td>dd/mm/yy</td><td>Female</td>
+            <td>rhythm ecg</td>
+            <td>dd/mm/yy</td><td>confirmed</td>
+            <td><span class="dt-status synced"><span class="dt-s-ico"></span>synced</span></td>
+            <td><button class="dt-actions-btn" aria-label="Actions">⋯</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin:24px 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-muted-foreground);font-weight:600">Multi-select states</h3>
+    <div style="display:flex; gap:12px; flex-wrap:wrap">
+      <button class="dt-pill"><span class="dt-check"></span>Multi-select</button>
+      <button class="dt-pill checked"><span class="dt-check"></span>Deselect</button>
+      <button class="dt-pill">⟳ Refresh</button>
+    </div>
+</section>
+
+<section id="dropdown" class="section">
+
+
+    <h2>Dropdown menu</h2>
+    <p class="sub">Two patterns from Figma — <b>Simple dropdown</b> (<code>37646-52347</code>, a Select with its opened option list) and <b>Filter dropdown</b> (<code>37646-52076</code>, grouped sections with checkbox options).</p>
+
+    <style>
+      /* ----- Simple dropdown ----- */
+      .dd-simple-wrap { display: inline-flex; flex-direction: column; gap: 2px; width: 312px; margin-top: 10px; }
+      .dd-label { font: 500 16px/24px Inter, system-ui, sans-serif; color: #fff; margin-bottom: 6px; }
+      [data-theme="light"] .dd-label { color: #111; }
+      .dd-select {
+        position: relative; height: 40px; border-radius: 6px;
+        background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.24);
+        display:flex; align-items:center; padding: 0 43px 0 15px;
+        font: 400 16px/24px Inter, system-ui, sans-serif; color: #fff;
+        cursor: pointer;
+      }
+      [data-theme="light"] .dd-select { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.16); color: #111; }
+      .dd-select .dd-chev {
+        position: absolute; right: 11px; top: 50%; transform: translateY(-50%);
+        width: 20px; height: 20px; background: currentColor;
+        -webkit-mask: url(assets/dd_chev_down.svg) no-repeat center / contain;
+                mask: url(assets/dd_chev_down.svg) no-repeat center / contain;
+      }
+      .dd-popup {
+        background: #181818; border-radius: 6px; padding: 12px;
+        display:flex; flex-direction:column; gap: 8px; width: 100%;
+        box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      }
+      [data-theme="light"] .dd-popup { background: #f5f5f5; }
+      .dd-opt {
+        height: 48px; padding: 8px; border-radius: 6px;
+        display:flex; align-items:center; cursor: pointer;
+        font: 400 16px/24px Inter, system-ui, sans-serif; color: rgba(255,255,255,0.92);
+      }
+      [data-theme="light"] .dd-opt { color: rgba(0,0,0,0.9); }
+      .dd-opt:hover { background: rgba(255,255,255,0.06); }
+      [data-theme="light"] .dd-opt:hover { background: rgba(0,0,0,0.05); }
+
+      /* ----- Filter dropdown (grouped w/ checkboxes) ----- */
+      .dd-filter {
+        background: #181818; border-radius: 6px; padding: 12px;
+        width: 290px; display:flex; flex-direction:column;
+        box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      }
+      [data-theme="light"] .dd-filter { background: #f5f5f5; }
+      .dd-filter-sec {
+        height: 40px; padding: 0 8px;
+        display:flex; align-items:center; justify-content:space-between;
+        border-bottom: 1px solid rgba(255,255,255,0.16);
+        font: 700 14px/20px Inter, system-ui, sans-serif; color: rgba(255,255,255,0.92);
+        cursor: pointer; user-select: none;
+      }
+      [data-theme="light"] .dd-filter-sec { color: rgba(0,0,0,0.9); border-bottom-color: rgba(0,0,0,0.12); }
+      .dd-filter-sec .dd-chev {
+        width: 18px; height: 18px; background: currentColor;
+        -webkit-mask: url(assets/dd_chev_sec.svg) no-repeat center / contain;
+                mask: url(assets/dd_chev_sec.svg) no-repeat center / contain;
+      }
+      .dd-filter-row {
+        height: 48px; padding: 8px 0;
+        display:flex; align-items:center; gap: 8px;
+        font: 400 14px/20px Inter, system-ui, sans-serif; color: rgba(255,255,255,0.92);
+        cursor: pointer;
+      }
+      [data-theme="light"] .dd-filter-row { color: rgba(0,0,0,0.9); }
+      .dd-cb {
+        position: relative; width: 20px; height: 20px; border-radius: 4px;
+        border: 2px solid rgba(255,255,255,0.36); background: transparent;
+        flex-shrink: 0;
+      }
+      [data-theme="light"] .dd-cb { border-color: rgba(0,0,0,0.4); }
+      .dd-cb.checked { background: #FB8500; border-color: #FB8500; }
+      .dd-cb.checked::after {
+        content: ""; position: absolute; left: 5px; top: 2px;
+        width: 5px; height: 10px;
+        border-right: 2px solid #fff; border-bottom: 2px solid #fff;
+        transform: rotate(45deg);
+      }
+    </style>
+
+    <div style="display:flex; gap:48px; flex-wrap:wrap; align-items:flex-start; margin-top: 12px">
+      <!-- Simple dropdown -->
+      <div>
+        <h3 style="margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-muted-foreground);font-weight:600">Simple dropdown</h3>
+        <div class="dd-simple-wrap">
+          <div class="dd-label">Height unit of measure</div>
+          <div class="dd-select">cm<span class="dd-chev"></span></div>
+          <div class="dd-popup" style="margin-top: 4px">
+            <div class="dd-opt">cm</div>
+            <div class="dd-opt">in</div>
+            <div class="dd-opt">ft</div>
+            <div class="dd-opt">m</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter dropdown -->
+      <div>
+        <h3 style="margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-muted-foreground);font-weight:600">Filter dropdown — mandatory fields</h3>
+        <div class="dd-filter">
+          <div class="dd-filter-sec">Main info<span class="dd-chev"></span></div>
+          <div class="dd-filter-row"><span class="dd-cb checked"></span>First ID</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Second ID</div>
+          <div class="dd-filter-row"><span class="dd-cb checked"></span>First name</div>
+          <div class="dd-filter-row"><span class="dd-cb checked"></span>Last name</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Ethnicity</div>
+          <div class="dd-filter-row"><span class="dd-cb checked"></span>Gender at birth</div>
+          <div class="dd-filter-row"><span class="dd-cb checked"></span>Birth date</div>
+          <div class="dd-filter-row"><span class="dd-cb checked"></span>Age</div>
+          <div class="dd-filter-sec">Clinical info<span class="dd-chev"></span></div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Weight (kg)</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Height (cm)</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Systolic</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Diastolic</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>SPO2</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Therapy</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Technician</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Diagnostic query</div>
+          <div class="dd-filter-sec">Other info<span class="dd-chev"></span></div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Email</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Mobile number</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Address</div>
+          <div class="dd-filter-row"><span class="dd-cb"></span>Notes</div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<section id="empty" class="section">
+
+
+    <h2>Empty state</h2>
+    <p class="sub">Three empty-state variants from Figma: no search results (37646:52278, 37646:52469), no ECG exams registered (37646:52424, light; 37646:52365, dark).</p>
+    <div class="empty-row">
+      <div class="empty-card">
+        <div class="empty-art empty-art-search">
+          <img class="ea ea-docs-back" data-theme-asset="assets/empty_docs_back" alt="" />
+          <img class="ea ea-docs-card" data-theme-asset="assets/empty_docs_card" alt="" />
+          <img class="ea ea-p3140"     data-theme-asset="assets/empty_path3140"  alt="" />
+          <img class="ea ea-p3141"     data-theme-asset="assets/empty_path3141"  alt="" />
+          <img class="ea ea-ellipse"   data-theme-asset="assets/empty_ellipse"   alt="" />
+        </div>
+        <div class="empty-title">No results for this search</div>
+        <div class="empty-text">No matches found<br />Try a different search term</div>
+      </div>
+      <div class="empty-card empty-card-exams">
+        <img class="empty-folder" data-theme-asset="assets/empty_folder" alt="" />
+        <div class="empty-title">No ECG exams registered</div>
+        <div class="empty-text">There are no exams.<br />Get started by acquiring an exam</div>
+        <button class="empty-btn">Start new ECG</button>
+      </div>
+    </div>
+</section>
+
+<section id="iconbutton" class="section">
+    <h2>Icon button — Printer</h2>
+    <p class="sub">Square icon-only button (52×52, straight from Figma). Four states driven by the print job, not by theme — the <b>same colors</b> in light and dark. Figma: <code>37646-31910</code> (<code>PrinterIconButtonPrintingMvp3</code>).</p>
+
+    <style>
+      /* Printer at the real 52×52 Figma size with 6px radius and exact drop-shadow */
+      .ib-row { display:flex; gap: 24px; flex-wrap: wrap; align-items:flex-end; margin-top: 8px; }
+      .ib-cell { display:flex; flex-direction:column; align-items:center; gap:8px; }
+      .ib-cell .ib-label { font-size: 11px; color: var(--color-muted-foreground); font-family: ui-monospace, Menlo, Consolas, monospace; }
+      .ib {
+        position: relative; width: 52px; height: 52px; border-radius: 6px;
+        border: 1px solid transparent; cursor:pointer; overflow: visible;
+        box-shadow: 0 1px 3px rgba(0,0,0,.10), 0 1px 2px rgba(0,0,0,.06);
+      }
+      .ib > .ib-glyph {
+        position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+        width: 24px; height: 24px;
+      }
+      /* Corner asset — exact Figma position: left:36 top:36 size:12 on a 52px button */
+      .ib > .ib-corner {
+        position:absolute; left: 36px; top: 36px; width: 12px; height: 12px;
+        background-repeat: no-repeat; background-size: contain; background-position: center;
+      }
+      /* Printing state: slot stays 12×12 but the dot SVG is 10×10 centered (Figma: inset 8.33%) */
+      .ib[data-state="printing"] > .ib-corner { background-size: 10px 10px; animation: ibDotPulse 1.2s ease-in-out infinite; }
+      @keyframes ibDotPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.75); } }
+      /* Printer states — fixed colors from Figma, identical in light + dark */
+      .ib[data-state="default"]  { background: #222222; border-color: rgba(255,255,255,0.08); }
+      .ib[data-state="printing"] { background: #38A169; }
+      .ib[data-state="paused"]   { background: #FB8500; }
+      .ib[data-state="error"]    { background: #C53030; }
+      .ib[data-state] .ib-glyph  { background: #fff; -webkit-mask: url(assets/printer_glyph.svg) no-repeat center / contain; mask: url(assets/printer_glyph.svg) no-repeat center / contain; }
+    </style>
+
+    <div class="ib-row">
+      <div class="ib-cell">
+        <button class="ib" data-state="default" aria-label="Print — idle"><span class="ib-glyph"></span></button>
+        <span class="ib-label">default</span>
+      </div>
+      <div class="ib-cell">
+        <button class="ib" data-state="printing" aria-label="Print — printing">
+          <span class="ib-glyph"></span>
+          <span class="ib-corner" style="background-image:url(assets/printer_dot_anim.svg)"></span>
+        </button>
+        <span class="ib-label">printing</span>
+      </div>
+      <div class="ib-cell">
+        <button class="ib" data-state="paused" aria-label="Print — paused">
+          <span class="ib-glyph"></span>
+          <span class="ib-corner" style="background-image:url(assets/printer_play_circle.svg)"></span>
+        </button>
+        <span class="ib-label">paused</span>
+      </div>
+      <div class="ib-cell">
+        <button class="ib" data-state="error" aria-label="Print — error">
+          <span class="ib-glyph"></span>
+          <span class="ib-corner" style="background-image:url(assets/printer_pause_circle.svg)"></span>
+        </button>
+        <span class="ib-label">error</span>
+      </div>
+    </div>
+
+    <p class="sub" style="margin-top:14px">States straight from Figma — <code>default</code> <code>#222</code> · <code>printing</code> <code>#38A169</code> · <code>paused</code> <code>#FB8500</code> · <code>error</code> <code>#C53030</code>. Corner badge (12×12 at 36/36) is the raw SVG from each Figma node, nothing re-drawn.</p>
+</section>
+
+<section id="stat" class="section">
+    <h2>STAT button</h2>
+    <p class="sub">Dedicated button used during an exam to mark it as STAT (urgent). Two states only — <code>default</code> and <code>active</code>. Colors fixed in both themes. Figma: <code>37646-29303</code> (<code>STAT Icon Button_mvp6</code>).</p>
+
+    <style>
+      .ib[data-stat] .ib-glyph { background: #fff; -webkit-mask: url(assets/stat_glyph.svg) no-repeat center / contain; mask: url(assets/stat_glyph.svg) no-repeat center / contain; width: 32px; height: 32px; }
+      .ib[data-stat="default"] { background: #222222; border-color: rgba(255,255,255,0.08); }
+      .ib[data-stat="active"]  { background: #E53E3E; }
+    </style>
+
+    <div class="ib-row">
+      <div class="ib-cell">
+        <button class="ib" data-stat="default" aria-label="STAT — off"><span class="ib-glyph"></span></button>
+        <span class="ib-label">default</span>
+      </div>
+      <div class="ib-cell">
+        <button class="ib" data-stat="active" aria-label="STAT — active"><span class="ib-glyph"></span></button>
+        <span class="ib-label">active</span>
+      </div>
+    </div>
+</section>
+
+<section id="eventbutton" class="section">
+    <h2>Event button</h2>
+    <p class="sub">Icon button used for <b>exam events</b> (Flag, Clock, CRO…). Two toggleable states — <code>default</code> and <code>selected</code> — plus an optional <b>count badge</b> in the top-right. STAT is <b>not</b> an event, see the STAT section above.</p>
+
+    <style>
+      /* Real 52×52 button from Figma 37646-29349 (EventsButtonMvp3) */
+      .evb-row { display:flex; gap:24px; flex-wrap:wrap; align-items:flex-end; margin-top: 8px; }
+      .evb-cell { display:flex; flex-direction:column; align-items:center; gap:8px; }
+      .evb-cell .evb-label { font-size: 11px; color: var(--color-muted-foreground); font-family: ui-monospace, Menlo, Consolas, monospace; }
+      .evb {
+        position: relative; width: 52px; height: 52px; border-radius: 6px;
+        border: 1px solid rgba(255,255,255,0.08); background: #222;
+        cursor:pointer; overflow: visible;
+        box-shadow: 0 1px 3px rgba(0,0,0,.10), 0 1px 2px rgba(0,0,0,.06);
+      }
+      .evb > .evb-img {
+        position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+        width: 24px; height: 24px; display:block;
+      }
+      .evb[data-selected] { background: #000; border-color: #FB8500; }
+      /* Real badge: Ellipse 213 SVG at 17×17, top-right overflowing */
+      .evb-badge {
+        position:absolute; width: 17px; height: 17px;
+        right: -3.5px; top: -3.5px;
+        background: url(assets/evb_badge.svg) no-repeat center / contain;
+        display:flex; align-items:center; justify-content:center;
+        font: 600 10px/1 Inter, system-ui, sans-serif; color: #fff;
+      }
+      .evb .evb-text { font: 500 14px/1 Inter, system-ui, sans-serif; color: #fff; display:flex; align-items:center; justify-content:center; width:100%; height:100%; }
+      .evb[data-selected] .evb-text { color: #FB8500; }
+    </style>
+
+    <div class="evb-row">
+      <div class="evb-cell">
+        <button class="evb" aria-label="Flag event"><img class="evb-img" src="assets/evb_flag_default.svg" alt=""></button>
+        <span class="evb-label">flag · default</span>
+      </div>
+      <div class="evb-cell">
+        <button class="evb" aria-label="Flag event (3)">
+          <img class="evb-img" src="assets/evb_flag_default.svg" alt="">
+          <span class="evb-badge">3</span>
+        </button>
+        <span class="evb-label">flag · badge</span>
+      </div>
+      <div class="evb-cell">
+        <button class="evb" data-selected aria-label="Flag event (selected)"><img class="evb-img" src="assets/evb_flag_selected.svg" alt=""></button>
+        <span class="evb-label">flag · selected</span>
+      </div>
+      <div class="evb-cell">
+        <button class="evb" data-selected aria-label="Flag event (selected, 3)">
+          <img class="evb-img" src="assets/evb_flag_selected.svg" alt="">
+          <span class="evb-badge">3</span>
+        </button>
+        <span class="evb-label">flag · selected + badge</span>
+      </div>
+      <div class="evb-cell">
+        <button class="evb" aria-label="Clock event"><img class="evb-img" src="assets/ev_clock.svg" alt=""></button>
+        <span class="evb-label">clock · default</span>
+      </div>
+      <div class="evb-cell">
+        <button class="evb" data-selected aria-label="Clock event (selected)"><img class="evb-img" src="assets/ev_clock.svg" alt=""></button>
+        <span class="evb-label">clock · selected</span>
+      </div>
+      <div class="evb-cell">
+        <button class="evb" aria-label="CRO event"><span class="evb-text">CRO</span></button>
+        <span class="evb-label">CRO · default</span>
+      </div>
+      <div class="evb-cell">
+        <button class="evb" data-selected aria-label="CRO event (selected)"><span class="evb-text">CRO</span></button>
+        <span class="evb-label">CRO · selected</span>
+      </div>
+    </div>
+
+    <p class="sub" style="margin-top:16px">Figma — Flag <code>37646-29349</code> · Clock <code>37646-31769</code> · CRO <code>37646-31777</code>. Flag glyph comes straight from Figma in two variants (default white, selected orange). Badge is the real <code>Ellipse 213</code> SVG with white "3", nothing re-drawn.</p>
+</section>
+
+<section id="loading" class="section">
+
+
+  <h2>Loading</h2>
+  <p class="sub">Three dots fading in sequence — the background color swaps with the theme, the dots stay orange. Figma: <code>37646:52414</code>.</p>
+  <style>
+    .dots-fade { display: inline-flex; gap: 8px; align-items: center; }
+    .dots-fade .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #FB8500;
+      animation: dotFade 1.4s ease-in-out infinite;
+    }
+    .dots-fade .dot:nth-child(2) { animation-delay: .2s; }
+    .dots-fade .dot:nth-child(3) { animation-delay: .4s; }
+    @keyframes dotFade { 0%, 100% { opacity: 0.15; } 40% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      .dots-fade .dot { animation: none; opacity: 1; }
+    }
+    .ld-stage {
+      border: 1px solid var(--color-border); border-radius: var(--radius-md);
+      background: var(--color-card);
+      padding: 40px; display:flex; align-items:center; justify-content:center;
+      min-height: 140px; margin-top: 12px;
+    }
+  </style>
+  <div class="ld-stage">
+    <div class="dots-fade"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  </div>
+</section>
+
+<section id="pagination" class="section">
+
+
+    <h2>Pagination</h2>
+    <div class="pagination">
+      <button class="btn btn-icon btn-ghost" aria-label="Previous">‹</button>
+      <button class="page">1</button>
+      <button class="page active">2</button>
+      <button class="page">3</button>
+      <button class="page">4</button>
+      <span class="page ellipsis">…</span>
+      <button class="page">12</button>
+      <button class="btn btn-icon btn-ghost" aria-label="Next">›</button>
+    </div>
+</section>
+
+<section id="progress" class="section">
+
+
+    <h2>Progress</h2>
+    <h3>Linear</h3>
+    <div class="stack">
+      <div class="progress"><div class="progress-fill" style="width:30%"></div></div>
+      <div class="progress"><div class="progress-fill" style="width:65%"></div></div>
+      <div class="progress indeterminate"><div class="progress-fill"></div></div>
+    </div>
+    <h3>Spinner</h3>
+    <div class="row">
+      <span class="spinner"></span>
+      <span class="muted">Acquiring…</span>
+    </div>
+</section>
+
+<section id="slider" class="section">
+
+
+    <h2>Slider</h2>
+    <div class="field">
+      <label>Gain <span class="muted">· 10 mm/mV</span></label>
+      <input type="range" min="1" max="20" value="10" />
+    </div>
+    <div class="field">
+      <label>Speed <span class="muted">· 25 mm/s</span></label>
+      <input type="range" min="12" max="50" value="25" />
+    </div>
+</section>
+
+<section id="switch" class="section">
+
+
+    <h2>Switch</h2>
+    <div class="row">
+      <label class="switch-row"><span class="switch"><input type="checkbox" checked /><span class="switch-track"><span class="switch-thumb"></span></span></span> Automatic acquisition</label>
+      <label class="switch-row"><span class="switch"><input type="checkbox" /><span class="switch-track"><span class="switch-thumb"></span></span></span> Dark mode default</label>
+      <label class="switch-row"><span class="switch"><input type="checkbox" disabled /><span class="switch-track"><span class="switch-thumb"></span></span></span> Disabled</label>
+    </div>
+</section>
+
+<section id="tabs" class="section">
+
+
+    <h2>Tabs</h2>
+    <p class="sub">Inline tabs used inside modals (patient info, exam settings…). Each tab carries its own underline; the active one switches to the primary color for both text and underline. Figma: <code>37646-31938</code>.</p>
+    <div class="tabs">
+      <button class="tab active">Main info</button>
+      <button class="tab">Clinical info</button>
+      <button class="tab">Other info</button>
+    </div>
+    <div class="tab-panel">
+      <p class="muted">Tab content area — uses <code>var(--color-card)</code>.</p>
+    </div>
+</section>
+
+<section id="toast" class="section">
+
+
+  <h2>Toast</h2>
+  <p class="sub">Bottom-centre, one line, auto-dismiss ~4.5 s, replaces (never stacks). Colour only in the icon. The links below are the triggers — not Design System buttons.</p>
+  <style>
+    .toast-triggers { display:inline-flex; flex-wrap:wrap; gap:18px; margin-top:12px; font-size:12.5px; color: var(--color-muted-foreground); }
+    .toast-triggers a { color: var(--color-primary); text-decoration: none; border-bottom: 1px dashed currentColor; padding-bottom: 1px; cursor: pointer; }
+    .toast-triggers a:hover { color: var(--color-foreground); }
+    .toast-triggers .sep { opacity: .4; }
+  </style>
+  <div class="toast-demo"><div class="toast-stack" id="toastStack"></div></div>
+  <div class="toast-triggers">
+    <span>Preview:</span>
+    <a onclick="showToast('success','3 exams synced.')">success</a>
+    <a onclick="showToast('info','All wires are properly connected.')">info</a>
+    <a onclick="showToast('warning','STAT exam pending review.')">warning</a>
+    <a onclick="showToast('error','Sync failed. Check the USB connection.')">error</a>
+    <a onclick="showToast('error','The continuous printing has stopped.','View printer queue')">error + action</a>
+  </div>
+</section>
+
+<section id="tooltip" class="section">
+
+
+    <h2>Tooltip</h2>
+    <p class="sub">Appears on hover/focus — hover any of the targets below to see it. Dark pill with a small arrow pointing to the target.</p>
+    <style>
+      .tt-row { display:flex; gap: 48px; flex-wrap: wrap; align-items:center; margin-top: 12px; }
+      .tt-wrap { position: relative; display: inline-flex; }
+      .tt-wrap .tooltip {
+        position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translateX(-50%);
+        white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .12s ease;
+        background: var(--color-foreground); color: var(--color-background);
+        padding: 6px 10px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500;
+        box-shadow: var(--shadow-md);
+      }
+      .tt-wrap .tooltip::after {
+        content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%);
+        border: 5px solid transparent; border-top-color: var(--color-foreground);
+      }
+      .tt-wrap:hover .tooltip, .tt-wrap:focus-within .tooltip { opacity: 1; }
+    </style>
+    <div class="tt-row">
+      <span class="tt-wrap"><button class="btn btn-icon btn-ghost" aria-label="Filter"><img src="assets/dt_filter.svg" style="width:18px;height:18px;filter:invert(1)" alt=""></button><span class="tooltip">Filter the list</span></span>
+      <span class="tt-wrap"><button class="btn btn-icon btn-ghost" aria-label="Edit"><img src="assets/edit2.svg" style="width:18px;height:18px;filter:invert(1)" alt=""></button><span class="tooltip">Edit</span></span>
+      <span class="tt-wrap"><button class="btn btn-sm">Hover me</button><span class="tooltip">Also works on labels</span></span>
+    </div>
+</section>
+
+</main>
+<script>
+  (function(){var r=document.documentElement,b=document.getElementById('themeToggle'),l=document.getElementById('themeLabel');
+  function swapAssets(t){document.querySelectorAll('[data-theme-asset]').forEach(function(el){var base=el.getAttribute('data-theme-asset');el.src=base+(t==='dark'?'_dark.svg':'.svg');});}
+  function a(t){r.setAttribute('data-theme',t);if(l)l.textContent=t==='dark'?'Dark':'Light';swapAssets(t);try{localStorage.setItem('anchor-ds-theme',t)}catch(e){}}
+  var s=null;try{s=localStorage.getItem('anchor-ds-theme')}catch(e){}a(s||r.getAttribute('data-theme')||'dark');
+  if(b)b.addEventListener('click',function(){a(r.getAttribute('data-theme')==='dark'?'light':'dark')});})();
+</script>
+<script>
+  document.querySelectorAll('.nav-item').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      a.classList.add('active');
+    });
+  });
+  /* Data table: sort on header click, select row on click */
+  (() => {
+    const table = document.getElementById('dsTable');
+    if (!table) return;
+    const headers = [...table.querySelectorAll('th[data-sort]')];
+    const tbody = table.querySelector('tbody');
+    headers.forEach((th, idx) => {
+      th.addEventListener('click', () => {
+        const next = th.classList.contains('sort-asc') ? 'desc' : 'asc';
+        headers.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+        th.classList.add('sort-' + next);
+        const col = [...th.parentElement.children].indexOf(th);
+        const rows = [...tbody.rows];
+        rows.sort((a, b) => {
+          const r = a.cells[col].textContent.trim().localeCompare(b.cells[col].textContent.trim(), undefined, { numeric: true });
+          return next === 'asc' ? r : -r;
+        });
+        rows.forEach(r => tbody.appendChild(r));
+      });
+    });
+    const multi = document.querySelector('.table-multi');
+    let multiOn = false;
+    if (multi) multi.addEventListener('click', () => {
+      multiOn = !multiOn;
+      multi.setAttribute('aria-pressed', String(multiOn));
+    });
+    [...tbody.rows].forEach(row => row.addEventListener('click', e => {
+      if (e.target.closest('button')) return;
+      if (multiOn) { row.classList.toggle('is-selected'); return; }
+      [...tbody.rows].forEach(r => r.classList.remove('is-selected'));
+      row.classList.add('is-selected');
+    }));
+  })();
+  /* Segmented control navigation */
+  document.querySelectorAll('.segmented').forEach(group => {
+    const buttons = group.querySelectorAll('.seg');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  });
+  /* Single-select groups in Figma frames and settings rail */
+  document.querySelectorAll('.fm-tabs, .fm-chips, .vz-row, .settings-rail').forEach(group => {
+    const isSelected = group.classList.contains('fm-chips') || group.classList.contains('vz-row');
+    const cls = isSelected ? 'is-selected' : 'active';
+    const items = [...group.querySelectorAll(group.classList.contains('settings-rail') ? '.settings-item' : ':scope > button')]
+      .filter(b => group.classList.contains('settings-rail') || !b.querySelector('img'));
+    items.forEach(b => b.addEventListener('click', () => {
+      items.forEach(x => x.classList.remove(cls));
+      b.classList.add(cls);
+    }));
+  });
+  /* Leads tiles: multi-select toggle */
+  document.querySelectorAll('.fm-card > .fm-tile').forEach(b => {
+    b.addEventListener('click', () => b.classList.toggle('is-selected'));
+  });
+  /* Toast: replace, never stack; auto-dismiss ~4.5 s */
+  (() => {
+    let active = null, timer = null;
+    const icons = {
+      info: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="8.01"/><line x1="12" y1="11" x2="12" y2="16"/></svg>',
+      success: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>',
+      error: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>',
+      warning: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16" x2="12" y2="16.01"/></svg>'
+    };
+    const closeSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
+    window.showToast = function (type, message, action) {
+      const stack = document.getElementById('toastStack');
+      if (active) { clearTimeout(timer); active.remove(); active = null; }
+      const el = document.createElement('div');
+      el.className = 'toast ' + type;
+      el.innerHTML = '<span class="icon">' + icons[type] + '</span><div class="body"><p class="message"></p>' + (action ? '<a href="#" class="link"></a>' : '') + '</div><span class="close">' + closeSvg + '</span>';
+      el.querySelector('.message').textContent = message;
+      if (action) el.querySelector('.link').textContent = action;
+      stack.appendChild(el);
+      active = el;
+      requestAnimationFrame(() => el.classList.add('show'));
+      const dismiss = () => {
+        el.classList.remove('show');
+        setTimeout(() => { el.remove(); if (active === el) active = null; }, 600);
+      };
+      el.querySelector('.close').onclick = dismiss;
+      timer = setTimeout(dismiss, 4500);
+    };
+  })();
+  /* Code blocks: accordion + ghost copy (Beat 2 look) */
+  (() => {
+    const skip = ['icons','colors','typography','spacing','loading'];
+    document.querySelectorAll('section.section').forEach(sec => {
+      if (skip.includes(sec.id)) return;
+      const nodes = [...sec.children].filter(n => n.tagName !== 'H2' && !(n.tagName === 'P' && n.classList.contains('sub')));
+      if (!nodes.length) return;
+      const html = nodes.map(n => n.outerHTML).join('\n');
+      const det = document.createElement('details');
+      det.className = 'code-accordion';
+      det.innerHTML = '<summary><span class="code-caret">›</span><span class="code-label">HTML</span><button class="btn-ghost-copy" type="button">Copy</button></summary><pre class="code-pre"><code></code></pre>';
+      det.querySelector('code').textContent = html;
+      const btn = det.querySelector('button');
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault(); e.stopPropagation();
+        try { await navigator.clipboard.writeText(html); }
+        catch (_) { const ta = document.createElement('textarea'); ta.value = html; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+        btn.textContent = 'Copied'; btn.classList.add('is-ok');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('is-ok'); }, 1500);
+      });
+      sec.appendChild(det);
+    });
+  })();
+  /* Patient entry tabs */
+  document.querySelectorAll('.pe-tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.pe-tab').forEach(x => x.classList.remove('is-active'));
+    t.classList.add('is-active');
+    document.querySelectorAll('.pe-pane').forEach(p => p.classList.toggle('is-on', p.dataset.p === t.dataset.pane));
+  }));
+  document.querySelectorAll('.pe-seg').forEach(g => g.querySelectorAll('.pe-seg-b').forEach(b => b.addEventListener('click', () => {
+    g.querySelectorAll('.pe-seg-b').forEach(x => x.classList.remove('is-on'));
+    b.classList.add('is-on');
+  })));
+  document.querySelectorAll('.pf > div:not(.pf-alt):not(.pf-tab):not(.pf-btn):not(.pf-bar):not(.pf-task):not(.pf-upper):not(.pf-back):not(.pf-title):not(.pf-hr):not(.pf-sync):not(.pf-v1):not(.pf-btn2)').forEach(e => e.classList.add('pf-main'));
+  document.querySelectorAll('.pf-tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.pf-tab').forEach(x => x.classList.toggle('is-on', x === t));
+    const pane = t.dataset.pane;
+    document.querySelectorAll('.pf-alt').forEach(x => x.style.display = x.dataset.p === pane ? 'block' : 'none');
+    document.querySelectorAll('.pf-main').forEach(x => x.style.display = pane === 'm' ? '' : 'none');
+  }));
+</script>
+</body>
+</html>

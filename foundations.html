@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Foundations — Anchor DS</title>
+<link rel="stylesheet" href="tokens.css?v=5" />
+<link rel="stylesheet" href="styles.css?v=5" />
+<link rel="stylesheet" href="shell.css?v=5" />
+</head>
+<body data-page="foundations">
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="brand" style="text-decoration:none;color:inherit"><span class="brand-dot"></span><span>Anchor DS</span><span class="badge badge-neutral">Preview · v0.1</span></a>
+  </div>
+  <div class="topbar-right">
+    <button class="btn btn-ghost btn-sm" id="themeToggle" aria-label="Toggle theme"><span class="theme-icon">◐</span> <span id="themeLabel">Dark</span></button>
+  </div>
+</header>
+<nav class="sidenav">
+  <div class="nav-sep">Design System</div>
+  <a href="index.html" class="nav-item">Overview</a>
+  <a href="foundations.html" class="nav-item active">Foundations</a>
+  <a href="components.html" class="nav-item">Components</a>
+  <a href="blocks.html" class="nav-item">Blocks</a>
+  <div class="nav-sep">On this page</div>
+  <a href="#colors" class="nav-item nav-sub">Colors</a>
+  <a href="#typography" class="nav-item nav-sub">Typography</a>
+  <a href="#spacing" class="nav-item nav-sub">Spacing</a>
+  <a href="#icons" class="nav-item nav-sub">Icons</a>
+</nav>
+<main class="content">
+<div class="page-head"><h1>Foundations</h1></div>
+
+<section id="colors" class="section">
+
+
+  <h2>Colors</h2>
+  <p class="sub">Semantic color tokens driving <code>tokens.css</code> and the planned WPF ResourceDictionary. Light and dark values shown side by side. Click a swatch to copy its CSS variable; click the WPF key to copy that.</p>
+  <style>
+    .co-group { margin: 20px 0 8px; }
+    .co-group h3 { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--color-muted-foreground); font-weight: 600; }
+    .co-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+    .co-tile { background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 10px; display:flex; gap: 10px; align-items:stretch; }
+    .co-sw { width: 44px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); cursor: pointer; flex-shrink: 0; position: relative; display:flex; align-items:flex-end; justify-content:center; padding-bottom: 3px; font-size: 9px; color: rgba(0,0,0,.55); font-weight:600; letter-spacing:.05em; }
+    .co-sw.co-dark { color: rgba(255,255,255,.55); }
+    .co-sw.copied::after { content: "✓"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,.45); color:#fff; border-radius: var(--radius-sm); font-size: 14px; }
+    .co-body { display:flex; flex-direction:column; gap:3px; min-width:0; flex:1; }
+    .co-name { font-size: 12px; font-weight: 600; color: var(--color-foreground); font-family: ui-monospace, Menlo, Consolas, monospace; }
+    .co-val { font-size: 10.5px; color: var(--color-muted-foreground); font-family: ui-monospace, Menlo, Consolas, monospace; word-break: break-all; line-height:1.3; }
+    .co-wpf { font-size: 10px; color: var(--color-muted-foreground); font-family: ui-monospace, Menlo, Consolas, monospace; cursor: pointer; padding: 2px 4px; border-radius: 4px; display: inline-block; margin-top: auto; }
+    .co-wpf:hover { background: var(--color-muted); color: var(--color-foreground); }
+    .co-wpf.copied { background: color-mix(in srgb, var(--color-primary), transparent 85%); color: var(--color-primary); }
+    .co-wpf::before { content: "WPF: "; opacity: .55; }
+  </style>
+  <div id="coRoot"></div>
+  <script>
+    (function () {
+      fetch('tokens/tokens.json').then(function (r) { return r.json(); }).then(function (data) {
+        var CATS = [
+          { key: 'surface',  title: 'Surface' },
+          { key: 'brand',    title: 'Brand' },
+          { key: 'neutral',  title: 'Neutral' },
+          { key: 'feedback', title: 'Feedback' },
+          { key: 'form',     title: 'Form' },
+          { key: 'alert',    title: 'Alert backgrounds' },
+          { key: 'status',   title: 'Status (oklch)' },
+        ];
+        var root = document.getElementById('coRoot');
+        function copy(txt, el) {
+          navigator.clipboard.writeText(txt).then(function () {
+            el.classList.add('copied');
+            setTimeout(function () { el.classList.remove('copied'); }, 800);
+          });
+        }
+        CATS.forEach(function (cat) {
+          var bucket = data.tokens[cat.key];
+          if (!bucket) return;
+          var wrap = document.createElement('div');
+          wrap.className = 'co-group';
+          var count = Object.keys(bucket).length;
+          wrap.innerHTML = '<h3>' + cat.title + ' <span style="color:var(--color-muted-foreground);font-weight:400;text-transform:none;letter-spacing:0">(' + count + ')</span></h3><div class="co-grid"></div>';
+          var grid = wrap.querySelector('.co-grid');
+          Object.keys(bucket).forEach(function (name) {
+            var t = bucket[name];
+            var cssVar = '--color-' + name;
+            var tile = document.createElement('div');
+            tile.className = 'co-tile';
+            var lightVal, darkVal;
+            if (cat.key === 'status') {
+              // status tokens have dot/bg/fg instead of light/dark
+              lightVal = t.dot; darkVal = t.dot;
+            } else {
+              lightVal = t.light || t.value; darkVal = t.dark || t.value;
+            }
+            var wpf = t.wpf || '';
+            tile.innerHTML =
+              '<div class="co-sw"       title="Light · click to copy ' + cssVar + '" style="background:' + lightVal + '">L</div>' +
+              '<div class="co-sw co-dark" title="Dark · click to copy ' + cssVar + '"  style="background:' + darkVal  + '">D</div>' +
+              '<div class="co-body">' +
+                '<div class="co-name">' + name + '</div>' +
+                '<div class="co-val"><b>L</b> ' + lightVal + '</div>' +
+                '<div class="co-val"><b>D</b> ' + darkVal + '</div>' +
+                (wpf ? '<span class="co-wpf" title="Click to copy">' + wpf + '</span>' : '') +
+              '</div>';
+            var sws = tile.querySelectorAll('.co-sw');
+            sws.forEach(function (sw) { sw.addEventListener('click', function () { copy(cssVar, sw); }); });
+            var wpfEl = tile.querySelector('.co-wpf');
+            if (wpfEl) wpfEl.addEventListener('click', function () { copy(wpf, wpfEl); });
+            grid.appendChild(tile);
+          });
+          root.appendChild(wrap);
+        });
+      }).catch(function (e) {
+        document.getElementById('coRoot').innerHTML = '<p class="sub" style="color:#d97706">Could not load tokens/tokens.json: ' + e.message + '</p>';
+      });
+    })();
+  </script>
+</section>
+
+<section id="typography" class="section">
+
+
+  <h2>Typography</h2>
+  <p class="sub">Font families and type scale from <code>tokens/tokens.json</code>. Click a row to copy its key.</p>
+  <style>
+    .ty-family { background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 14px 16px; margin: 8px 0; display:flex; gap: 16px; align-items:baseline; cursor:pointer; }
+    .ty-family:hover { border-color: var(--color-primary); }
+    .ty-family .ty-k { font-size: 11px; color: var(--color-muted-foreground); font-family: ui-monospace, Menlo, Consolas, monospace; min-width: 70px; }
+    .ty-family .ty-v { font-size: 20px; flex:1; }
+    .ty-family.copied { border-color: var(--color-primary); }
+    .ty-row { background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 14px 16px; margin: 8px 0; display:grid; grid-template-columns: 120px 1fr 90px; gap:16px; align-items:baseline; cursor:pointer; }
+    .ty-row:hover { border-color: var(--color-primary); }
+    .ty-row .ty-k { font-size: 11px; color: var(--color-muted-foreground); font-family: ui-monospace, Menlo, Consolas, monospace; }
+    .ty-row .ty-sample { color: var(--color-foreground); }
+    .ty-row .ty-meta { font-size: 11px; color: var(--color-muted-foreground); font-family: ui-monospace, Menlo, Consolas, monospace; text-align:right; }
+    .ty-row.copied { border-color: var(--color-primary); }
+  </style>
+  <div id="tyRoot"></div>
+  <script>
+    (function () {
+      fetch('tokens/tokens.json').then(function (r) { return r.json(); }).then(function (data) {
+        var ty = data.tokens.typography;
+        var root = document.getElementById('tyRoot');
+        function row(k, sample, meta, copyTxt, cls) {
+          var el = document.createElement('div');
+          el.className = cls;
+          el.innerHTML = '<div class="ty-k">' + k + '</div><div class="' + (cls === 'ty-family' ? 'ty-v' : 'ty-sample') + '">' + sample + '</div>' + (meta ? '<div class="ty-meta">' + meta + '</div>' : '');
+          el.addEventListener('click', function () {
+            navigator.clipboard.writeText(copyTxt).then(function () { el.classList.add('copied'); setTimeout(function(){el.classList.remove('copied');},800); });
+          });
+          return el;
+        }
+        // Families
+        var fh = document.createElement('h3'); fh.style.cssText='margin:16px 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-muted-foreground);font-weight:600'; fh.textContent='Families'; root.appendChild(fh);
+        ['font-sans','font-mono'].forEach(function (k) {
+          var v = ty[k].value;
+          root.appendChild(row(k, '<span style="font-family:' + v + '">The quick brown fox jumps over the lazy dog</span>', v.split(',')[0], 'var(--' + k + ')', 'ty-family'));
+        });
+        // Scale
+        var sh = document.createElement('h3'); sh.style.cssText='margin:24px 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-muted-foreground);font-weight:600'; sh.textContent='Scale'; root.appendChild(sh);
+        var scale = ty.scale;
+        Object.keys(scale).forEach(function (k) {
+          var s = scale[k];
+          var style = 'font-size:' + s.size + ';font-weight:' + (s.weight || 400) + ';' + (s.tracking ? 'letter-spacing:' + s.tracking + ';' : '') + (s.case ? 'text-transform:' + s.case + ';' : '') + (s.family === 'mono' ? 'font-family:' + ty['font-mono'].value : '');
+          var sample = '<span style="' + style + '">' + k + ' — Anchor DS</span>';
+          var meta = s.size + ' / ' + (s.weight || 400) + (s.tracking ? ' · ' + s.tracking : '');
+          root.appendChild(row(k, sample, meta, k, 'ty-row'));
+        });
+      });
+    })();
+  </script>
+</section>
+
+<section id="spacing" class="section">
+
+
+  <h2>Spacing &amp; radius</h2>
+  <p class="sub">Spacing scale, radius scale and elevation tokens — same source of truth (<code>tokens.json</code>). Values show as live boxes/shadows.</p>
+  <style>
+    .sp-row { display:grid; grid-template-columns: 70px 1fr 80px 110px; gap: 14px; align-items:center; padding: 10px 14px; background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius-md); margin: 6px 0; cursor:pointer; }
+    .sp-row:hover { border-color: var(--color-primary); }
+    .sp-row.copied { border-color: var(--color-primary); }
+    .sp-row .sp-k   { font-size: 11px; font-family: ui-monospace, Menlo, Consolas, monospace; color: var(--color-muted-foreground); }
+    .sp-row .sp-vis { height: 24px; display:flex; align-items:center; }
+    .sp-row .sp-bar { background: var(--color-primary); height: 10px; border-radius: 3px; }
+    .sp-row .sp-val { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; color: var(--color-foreground); text-align:right; }
+    .sp-row .sp-wpf { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 10px; color: var(--color-muted-foreground); text-align:right; }
+    .ra-grid, .el-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    .ra-tile, .el-tile { background: var(--color-card); border: 1px solid var(--color-border); padding: 16px; text-align:center; cursor:pointer; }
+    .ra-tile:hover, .el-tile:hover { border-color: var(--color-primary); }
+    .ra-tile .ra-shape { background: var(--color-primary); height: 48px; margin-bottom: 10px; }
+    .el-tile .el-shape { background: var(--color-background); height: 48px; margin-bottom: 10px; border-radius: var(--radius-md); }
+    .ra-tile .sp-k, .el-tile .sp-k { font-size: 11px; font-family: ui-monospace, Menlo, Consolas, monospace; color: var(--color-muted-foreground); }
+    .ra-tile .sp-val, .el-tile .sp-val { font-size: 11px; font-family: ui-monospace, Menlo, Consolas, monospace; color: var(--color-foreground); margin-top: 4px; }
+  </style>
+  <h3 style="margin:16px 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-muted-foreground);font-weight:600">Spacing</h3>
+  <div id="spRoot"></div>
+  <h3 style="margin:24px 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-muted-foreground);font-weight:600">Radius</h3>
+  <div id="raRoot" class="ra-grid"></div>
+  <h3 style="margin:24px 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--color-muted-foreground);font-weight:600">Elevation</h3>
+  <div id="elRoot" class="el-grid"></div>
+  <script>
+    (function () {
+      fetch('tokens/tokens.json').then(function (r) { return r.json(); }).then(function (data) {
+        var sp = data.tokens.spacing, ra = data.tokens.radius, el = data.tokens.elevation;
+        function copy(el, txt) { navigator.clipboard.writeText(txt).then(function () { el.classList.add('copied'); setTimeout(function(){el.classList.remove('copied');},800); }); }
+        var spRoot = document.getElementById('spRoot');
+        Object.keys(sp).forEach(function (k) {
+          var t = sp[k];
+          var row = document.createElement('div');
+          row.className = 'sp-row';
+          row.innerHTML = '<div class="sp-k">' + k + '</div><div class="sp-vis"><div class="sp-bar" style="width:' + t.value + '"></div></div><div class="sp-val">' + t.value + '</div><div class="sp-wpf">' + (t.wpf || '') + '</div>';
+          row.addEventListener('click', function () { copy(row, 'var(--sp-' + k + ')'); });
+          spRoot.appendChild(row);
+        });
+        var raRoot = document.getElementById('raRoot');
+        Object.keys(ra).forEach(function (k) {
+          var t = ra[k];
+          var tile = document.createElement('div');
+          tile.className = 'ra-tile';
+          tile.innerHTML = '<div class="ra-shape" style="border-radius:' + t.value + '"></div><div class="sp-k">' + k + '</div><div class="sp-val">' + t.value + '</div>';
+          tile.addEventListener('click', function () { copy(tile, 'var(--radius-' + k + ')'); });
+          raRoot.appendChild(tile);
+        });
+        var elRoot = document.getElementById('elRoot');
+        Object.keys(el).forEach(function (k) {
+          var t = el[k];
+          var tile = document.createElement('div');
+          tile.className = 'el-tile';
+          var theme = document.documentElement.getAttribute('data-theme') || 'dark';
+          tile.innerHTML = '<div class="el-shape" style="box-shadow:' + (t[theme] || t.light) + '"></div><div class="sp-k">' + k + '</div><div class="sp-val">shadow ' + k + '</div>';
+          tile.addEventListener('click', function () { copy(tile, 'var(--shadow-' + k + ')'); });
+          elRoot.appendChild(tile);
+        });
+      });
+    })();
+  </script>
+</section>
+
+<section id="icons" class="section">
+
+
+  <h2>Icons</h2>
+  <p class="sub">Master list of every icon collected from the Anchor Figma (<code>q8E6pYovX5cHWUkr26ogdd</code>). Monochrome glyphs are recolored with <code>currentColor</code> so they stay visible in both themes; multi-color illustrations render as exported. Any new icon pulled while building a component lands here first — this section is the single source of truth. Click a tile to copy its filename.</p>
+  <style>
+    .ic-group { margin: 20px 0 8px; }
+    .ic-group h3 { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--color-muted-foreground); font-weight: 600; }
+    .ic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 10px; }
+    .ic-tile {
+      background: var(--color-card); border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); padding: 14px 8px 8px; text-align:center;
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      cursor: pointer; transition: border-color .15s, background .15s, transform .08s;
+    }
+    .ic-tile:hover { border-color: var(--color-primary); }
+    .ic-tile:active { transform: scale(.97); }
+    .ic-tile.copied { border-color: var(--color-primary); background: color-mix(in srgb, var(--color-primary), transparent 92%); }
+    .ic-tile .ic-name { font-size: 10.5px; color: var(--color-muted-foreground); word-break: break-all; line-height: 1.3; font-family: ui-monospace, Menlo, Consolas, monospace; }
+    .ic-tile.copied .ic-name { color: var(--color-primary); }
+    /* Monochrome glyph: paint SVG with currentColor via mask so it adapts to theme */
+    .ic-glyph { width: 24px; height: 24px; background: var(--color-foreground); -webkit-mask: var(--ic-src) no-repeat center / contain; mask: var(--ic-src) no-repeat center / contain; }
+    /* Multi-color illustration: render as-is, scaled down */
+    .ic-img { width: 40px; height: 40px; object-fit: contain; }
+    /* Illustrations often need a neutral surface to read in both themes */
+    .ic-tile.ic-illus { background: #fff; border-color: #e5e7eb; }
+    [data-theme="light"] .ic-tile.ic-illus { background: #f8fafc; border-color: var(--color-border); }
+  </style>
+  <div id="icRoot"></div>
+  <style>
+    .ic-tile .ic-aliases { font-size: 9.5px; color: var(--color-muted-foreground); opacity:.75; line-height:1.3; margin-top:2px; }
+    .ic-tile .ic-aliases b { color: var(--color-foreground); font-weight:600; opacity:.85; }
+    .ic-rot-90  .ic-glyph { transform: rotate(90deg); }
+    .ic-rot-180 .ic-glyph { transform: rotate(180deg); }
+    .ic-rot-270 .ic-glyph { transform: rotate(270deg); }
+  </style>
+  <script>
+    (function () {
+      // One tile per UNIQUE glyph (confirmed by md5 of SVG files).
+      // `alias` = other filenames exported from Figma that resolve to the same shape;
+      // kept for reference so the WPF port can collapse them to a single resource key.
+      // `rot` lets us derive directional variants from a single canonical file.
+      var GROUPS = [
+        { title: 'Chevron', kind: 'glyph', icons: [
+          { name: 'chevron_right.svg', alias: ['multi_chev.svg','modal_chevron.svg','ex_chev_right.svg'] },
+          { name: 'chevron_right.svg', label: 'chevron-down',  rot: 90 },
+          { name: 'chevron_right.svg', label: 'chevron-up',    rot: 270, alias: ['ex_chev_up.svg','ex_chev_down.svg'] },
+          { name: 'chevron_right.svg', label: 'chevron-left',  rot: 180 },
+        ]},
+        { title: 'Close', kind: 'glyph', icons: [
+          { name: 'sys_close.svg', label: 'close', alias: ['close.svg','close-white.svg','elec_close.svg','events_close.svg','multi_close.svg','sched_close.svg','modal_close.svg','modal_close_leads.svg','modal_close_vis.svg','ex_clear.svg'], note: '24×24. Use at any size.' },
+        ]},
+        { title: 'Navigation', kind: 'glyph', icons: [
+          { name: 'set_back.svg', label: 'arrow-back' },
+          { name: 'swipe_up.svg' },
+        ]},
+        { title: 'Actions', kind: 'glyph', icons: [
+          { name: 'ex_search.svg', label: 'search' },
+          { name: 'edit2.svg',     label: 'edit' },
+          { name: 'check_confirm.svg', label: 'check' },
+          { name: 'modal_check.svg',   label: 'check-modal' },
+          { name: 'modal_more.svg',    label: 'more' },
+          { name: 'ruler.svg' },
+          { name: 'usb.svg' },
+        ]},
+        { title: 'Alerts', kind: 'glyph', icons: [
+          { name: 'alert-info.svg',            label: 'info' },
+          { name: 'alert-success.svg',         label: 'success' },
+          { name: 'alert-warning.svg',         label: 'warning' },
+          { name: 'alert-destructive.svg',     label: 'destructive' },
+        ]},
+        { title: 'Settings menu', kind: 'glyph', icons: [
+          { name: 'settings_general.svg',      mono: false, note: 'Outer circle + inner glyph — multi-color.' },
+          { name: 'settings_ecg_wave.svg',     label: 'ecg' },
+          { name: 'settings_rhythm.svg',       mono: false },
+          { name: 'settings_auto.svg',         mono: false },
+          { name: 'settings_connectivity.svg', mono: false },
+          { name: 'settings_security.svg',     mono: false },
+          { name: 'settings_license.svg',      mono: false },
+          { name: 'settings_tool.svg' },
+        ]},
+        { title: 'Data table', kind: 'glyph', icons: [
+          { name: 'dt_search.svg',       label: 'search' },
+          { name: 'dt_filter.svg',       label: 'filter' },
+          { name: 'dt_sort_up.svg',      label: 'sort-up' },
+          { name: 'dt_sort_down.svg',    label: 'sort-down' },
+          { name: 'dt_cloud_off.svg',    label: 'status · not-synced' },
+          { name: 'dt_upload_cloud.svg', label: 'status · in-progress / synced' },
+        ]},
+        { title: 'Dropdown', kind: 'glyph', icons: [
+          { name: 'dd_chev_down.svg', label: 'select-chevron',  note: 'Collapsed state of the simple Select — 20×20.' },
+          { name: 'dd_chev_sec.svg',  label: 'section-chevron', note: 'Group header chevron inside the Filter dropdown — 18×18.' },
+          { name: 'dd_check.svg',     label: 'checkbox-tick',   note: 'White tick used when a filter checkbox is checked.' },
+        ]},
+        { title: 'Printer', kind: 'glyph', icons: [
+          { name: 'printer_glyph.svg',       label: 'printer' },
+          { name: 'printer_play_circle.svg', label: 'play-circle',   mono: false, note: 'Rendered as-is: outer circle holds the inner play triangle.' },
+          { name: 'printer_pause_circle.svg',label: 'pause-circle',  mono: false, note: 'Rendered as-is: outer circle holds the inner pause bars.' },
+          { name: 'printer_dot_anim.svg',    label: 'dot-animation', note: '10×10 dot. Figma component 24444:35409 — CSS pulses it inside the 12×12 slot in the DS.' },
+        ]},
+        { title: 'STAT', kind: 'glyph', icons: [
+          { name: 'stat_glyph.svg', label: 'stat (ambulance)' },
+        ]},
+        { title: 'Event glyphs', kind: 'glyph', icons: [
+          { name: 'evb_flag_default.svg',  label: 'flag · default',  note: 'White flag used by the Event button in default/preview state.' },
+          { name: 'evb_flag_selected.svg', label: 'flag · selected', note: 'Orange flag used by the Event button when active.' },
+          { name: 'ev_clock.svg',          label: 'clock' },
+        ]},
+        { title: 'Quick panel', kind: 'glyph', icons: [
+          { name: 'qp_light.svg',   alias: ['qp_sun.svg'] },
+          { name: 'qp_moon.svg' },
+          { name: 'qp_wifi.svg' },
+          { name: 'qp_bt.svg' },
+          { name: 'qp_settings.svg' },
+          { name: 'qp_power.svg' },
+        ]},
+        // System bar icons (sys_lang / sys_country / sys_conn / sys_devconn / sys_system)
+        // were exported with their background circle baked in and no clean inner glyph,
+        // so they render as solid dots in the DS. Pending re-export from Figma without the circle.
+        { title: 'Flag marker', kind: 'glyph', icons: [
+          { name: 'flag.svg' },
+        ]},
+        { title: 'Illustrations', kind: 'illus', icons: [
+          { name: 'empty_docs_back.svg' },
+          { name: 'empty_docs_card.svg' },
+          { name: 'empty_folder.svg' },
+          { name: 'flag_vec.svg',      alias: ['flag_vec_white.svg'] },
+          { name: 'flag_vec_blue.svg' },
+        ]},
+      ];
+      var root = document.getElementById('icRoot');
+      var total = 0;
+      GROUPS.forEach(function (g) {
+        total += g.icons.length;
+        var wrap = document.createElement('div');
+        wrap.className = 'ic-group';
+        wrap.innerHTML = '<h3>' + g.title + ' <span style="color:var(--color-muted-foreground);font-weight:400;text-transform:none;letter-spacing:0">(' + g.icons.length + ')</span></h3><div class="ic-grid"></div>';
+        var grid = wrap.querySelector('.ic-grid');
+        g.icons.forEach(function (ic) {
+          var label = ic.label || ic.name.replace(/\.svg$/, '');
+          var rotClass = ic.rot ? ' ic-rot-' + ic.rot : '';
+          var tile = document.createElement('div');
+          // Only true illustration groups get the light-card treatment.
+          // Glyphs rendered as-is (mono:false) stay on the default dark card so white content stays visible.
+          tile.className = 'ic-tile' + (g.kind === 'illus' ? ' ic-illus' : '') + rotClass;
+          tile.title = 'Click to copy filename';
+          var warnBlock = ic.incomplete
+            ? '<div class="ic-aliases" style="color:#d97706"><b>⚠</b> ' + ic.incomplete + '</div>'
+            : '';
+          // Aliases kept in a data attribute for the WPF port manifest, not shown.
+          if (ic.alias && ic.alias.length) tile.setAttribute('data-aliases', ic.alias.join(','));
+          if (g.kind === 'glyph' && ic.mono !== false) {
+            tile.innerHTML = '<span class="ic-glyph" style="--ic-src:url(\'assets/' + ic.name + '\')"></span><div class="ic-name">' + label + '</div>' + warnBlock;
+          } else {
+            tile.innerHTML = '<img class="ic-img" src="assets/' + ic.name + '" alt="" loading="lazy"><div class="ic-name">' + label + '</div>' + warnBlock;
+          }
+          tile.addEventListener('click', function () {
+            navigator.clipboard.writeText(ic.name).then(function () {
+              tile.classList.add('copied');
+              setTimeout(function () { tile.classList.remove('copied'); }, 900);
+            });
+          });
+          grid.appendChild(tile);
+        });
+        root.appendChild(wrap);
+      });
+    })();
+  </script>
+</section>
+
+</main>
+<script>
+  (function(){var r=document.documentElement,b=document.getElementById('themeToggle'),l=document.getElementById('themeLabel');
+  function a(t){r.setAttribute('data-theme',t);if(l)l.textContent=t==='dark'?'Dark':'Light';try{localStorage.setItem('anchor-ds-theme',t)}catch(e){}}
+  var s=null;try{s=localStorage.getItem('anchor-ds-theme')}catch(e){}if(s)a(s);
+  if(b)b.addEventListener('click',function(){a(r.getAttribute('data-theme')==='dark'?'light':'dark')});})();
+</script>
+<script>
+  document.querySelectorAll('.nav-item').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      a.classList.add('active');
+    });
+  });
+  /* Data table: sort on header click, select row on click */
+  (() => {
+    const table = document.getElementById('dsTable');
+    if (!table) return;
+    const headers = [...table.querySelectorAll('th[data-sort]')];
+    const tbody = table.querySelector('tbody');
+    headers.forEach((th, idx) => {
+      th.addEventListener('click', () => {
+        const next = th.classList.contains('sort-asc') ? 'desc' : 'asc';
+        headers.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+        th.classList.add('sort-' + next);
+        const col = [...th.parentElement.children].indexOf(th);
+        const rows = [...tbody.rows];
+        rows.sort((a, b) => {
+          const r = a.cells[col].textContent.trim().localeCompare(b.cells[col].textContent.trim(), undefined, { numeric: true });
+          return next === 'asc' ? r : -r;
+        });
+        rows.forEach(r => tbody.appendChild(r));
+      });
+    });
+    const multi = document.querySelector('.table-multi');
+    let multiOn = false;
+    if (multi) multi.addEventListener('click', () => {
+      multiOn = !multiOn;
+      multi.setAttribute('aria-pressed', String(multiOn));
+    });
+    [...tbody.rows].forEach(row => row.addEventListener('click', e => {
+      if (e.target.closest('button')) return;
+      if (multiOn) { row.classList.toggle('is-selected'); return; }
+      [...tbody.rows].forEach(r => r.classList.remove('is-selected'));
+      row.classList.add('is-selected');
+    }));
+  })();
+  /* Segmented control navigation */
+  document.querySelectorAll('.segmented').forEach(group => {
+    const buttons = group.querySelectorAll('.seg');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  });
+  /* Single-select groups in Figma frames and settings rail */
+  document.querySelectorAll('.fm-tabs, .fm-chips, .vz-row, .settings-rail').forEach(group => {
+    const isSelected = group.classList.contains('fm-chips') || group.classList.contains('vz-row');
+    const cls = isSelected ? 'is-selected' : 'active';
+    const items = [...group.querySelectorAll(group.classList.contains('settings-rail') ? '.settings-item' : ':scope > button')]
+      .filter(b => group.classList.contains('settings-rail') || !b.querySelector('img'));
+    items.forEach(b => b.addEventListener('click', () => {
+      items.forEach(x => x.classList.remove(cls));
+      b.classList.add(cls);
+    }));
+  });
+  /* Leads tiles: multi-select toggle */
+  document.querySelectorAll('.fm-card > .fm-tile').forEach(b => {
+    b.addEventListener('click', () => b.classList.toggle('is-selected'));
+  });
+  /* Toast: replace, never stack; auto-dismiss ~4.5 s */
+  (() => {
+    let active = null, timer = null;
+    const icons = {
+      info: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="8.01"/><line x1="12" y1="11" x2="12" y2="16"/></svg>',
+      success: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>',
+      error: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>',
+      warning: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16" x2="12" y2="16.01"/></svg>'
+    };
+    const closeSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
+    window.showToast = function (type, message, action) {
+      const stack = document.getElementById('toastStack');
+      if (active) { clearTimeout(timer); active.remove(); active = null; }
+      const el = document.createElement('div');
+      el.className = 'toast ' + type;
+      el.innerHTML = '<span class="icon">' + icons[type] + '</span><div class="body"><p class="message"></p>' + (action ? '<a href="#" class="link"></a>' : '') + '</div><span class="close">' + closeSvg + '</span>';
+      el.querySelector('.message').textContent = message;
+      if (action) el.querySelector('.link').textContent = action;
+      stack.appendChild(el);
+      active = el;
+      requestAnimationFrame(() => el.classList.add('show'));
+      const dismiss = () => {
+        el.classList.remove('show');
+        setTimeout(() => { el.remove(); if (active === el) active = null; }, 600);
+      };
+      el.querySelector('.close').onclick = dismiss;
+      timer = setTimeout(dismiss, 4500);
+    };
+  })();
+  /* Code blocks: accordion + ghost copy (Beat 2 look) */
+  (() => {
+    const skip = ['icons','colors','typography','spacing','loading'];
+    document.querySelectorAll('section.section').forEach(sec => {
+      if (skip.includes(sec.id)) return;
+      const nodes = [...sec.children].filter(n => n.tagName !== 'H2' && !(n.tagName === 'P' && n.classList.contains('sub')));
+      if (!nodes.length) return;
+      const html = nodes.map(n => n.outerHTML).join('\n');
+      const det = document.createElement('details');
+      det.className = 'code-accordion';
+      det.innerHTML = '<summary><span class="code-caret">›</span><span class="code-label">HTML</span><button class="btn-ghost-copy" type="button">Copy</button></summary><pre class="code-pre"><code></code></pre>';
+      det.querySelector('code').textContent = html;
+      const btn = det.querySelector('button');
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault(); e.stopPropagation();
+        try { await navigator.clipboard.writeText(html); }
+        catch (_) { const ta = document.createElement('textarea'); ta.value = html; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+        btn.textContent = 'Copied'; btn.classList.add('is-ok');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('is-ok'); }, 1500);
+      });
+      sec.appendChild(det);
+    });
+  })();
+  /* Patient entry tabs */
+  document.querySelectorAll('.pe-tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.pe-tab').forEach(x => x.classList.remove('is-active'));
+    t.classList.add('is-active');
+    document.querySelectorAll('.pe-pane').forEach(p => p.classList.toggle('is-on', p.dataset.p === t.dataset.pane));
+  }));
+  document.querySelectorAll('.pe-seg').forEach(g => g.querySelectorAll('.pe-seg-b').forEach(b => b.addEventListener('click', () => {
+    g.querySelectorAll('.pe-seg-b').forEach(x => x.classList.remove('is-on'));
+    b.classList.add('is-on');
+  })));
+  document.querySelectorAll('.pf > div:not(.pf-alt):not(.pf-tab):not(.pf-btn):not(.pf-bar):not(.pf-task):not(.pf-upper):not(.pf-back):not(.pf-title):not(.pf-hr):not(.pf-sync):not(.pf-v1):not(.pf-btn2)').forEach(e => e.classList.add('pf-main'));
+  document.querySelectorAll('.pf-tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.pf-tab').forEach(x => x.classList.toggle('is-on', x === t));
+    const pane = t.dataset.pane;
+    document.querySelectorAll('.pf-alt').forEach(x => x.style.display = x.dataset.p === pane ? 'block' : 'none');
+    document.querySelectorAll('.pf-main').forEach(x => x.style.display = pane === 'm' ? '' : 'none');
+  }));
+</script>
+</body>
+</html>

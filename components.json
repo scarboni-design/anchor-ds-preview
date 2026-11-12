@@ -1,0 +1,629 @@
+{
+  "meta": {
+    "name": "Anchor DS — Components manifest",
+    "version": "0.1.0",
+    "basedOn": "shadcn/ui (via Beat DS 2)",
+    "productionStack": "WPF (.NET) + MaterialDesignThemes.Wpf",
+    "principle": "Only components verified in the Anchor Figma are included. Anything not present in Figma is NOT added, even if shadcn has it."
+  },
+  "legend": {
+    "figmaStatus": {
+      "confirmed": "Visible in Figma 'Components MVP3' or in one of the 22 exported screens.",
+      "likely": "Pattern present in the Figma (e.g. Figma layer named for it) but not fully nailed — verify before locking.",
+      "unverified": "Added speculatively. REMOVE if not in Figma."
+    }
+  },
+  "components": [
+    {
+      "name": "Button",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Button",
+      "variants": [
+        "default",
+        "secondary",
+        "outline",
+        "ghost",
+        "destructive"
+      ],
+      "sizes": [
+        "sm",
+        "default",
+        "lg",
+        "icon"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "active",
+        "focus-visible",
+        "disabled"
+      ],
+      "mdixBase": "MaterialDesignRaisedButton (default), MaterialDesignOutlinedButton (outline), MaterialDesignFlatButton (ghost)",
+      "wpfResourceKey": "DS.Style.Button.Default | DS.Style.Button.Secondary | DS.Style.Button.Outline | DS.Style.Button.Ghost | DS.Style.Button.Destructive",
+      "when": "Any user action. Primary (default) = the commit action of a screen. One default button per surface.",
+      "dont": "Don't use ghost for dangerous actions. Don't stack two defaults in one dialog."
+    },
+    {
+      "name": "Alert",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Alert (extended to 4 variants)",
+      "variants": [
+        "info",
+        "warning",
+        "success",
+        "destructive"
+      ],
+      "mdixBase": "n/a — Card + icon",
+      "wpfResourceKey": "DS.Style.Alert.{Info|Warning|Success|Destructive}",
+      "when": "Inline, in-page message. Not a toast.",
+      "dont": "Don't use for ephemeral feedback — use Toast when added."
+    },
+    {
+      "name": "Badge",
+      "figmaStatus": "confirmed",
+      "aka": "Status chip",
+      "shadcnName": "Badge",
+      "variants": [
+        "info",
+        "success",
+        "warning",
+        "destructive",
+        "neutral"
+      ],
+      "withDot": true,
+      "wpfResourceKey": "DS.Style.Badge.{Info|Success|Warning|Destructive|Neutral}",
+      "when": "Status of a record (acquired, pending, failed, draft)."
+    },
+    {
+      "name": "Card",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Card",
+      "parts": [
+        "CardHeader",
+        "CardBody",
+        "CardFooter"
+      ],
+      "mdixBase": "Card",
+      "wpfResourceKey": "DS.Style.Card",
+      "when": "Grouping related info or actions within a page."
+    },
+    {
+      "name": "Input",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Input",
+      "states": [
+        "default",
+        "focus",
+        "invalid",
+        "disabled"
+      ],
+      "mdixBase": "MaterialDesignOutlinedTextBox",
+      "wpfResourceKey": "DS.Style.Input",
+      "when": "Single-line text entry. Pair with Label."
+    },
+    {
+      "name": "Select",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Select",
+      "mdixBase": "MaterialDesignOutlinedComboBox",
+      "wpfResourceKey": "DS.Style.Select",
+      "when": "Choosing one from a list under ~10 items. Over 10, use Command/search."
+    },
+    {
+      "name": "Checkbox",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Checkbox",
+      "mdixBase": "MaterialDesignCheckBox",
+      "wpfResourceKey": "DS.Style.Checkbox"
+    },
+    {
+      "name": "RadioGroup",
+      "figmaStatus": "confirmed",
+      "shadcnName": "RadioGroup",
+      "mdixBase": "MaterialDesignRadioButton",
+      "wpfResourceKey": "DS.Style.RadioButton"
+    },
+    {
+      "name": "Switch",
+      "figmaStatus": "likely",
+      "shadcnName": "Switch",
+      "mdixBase": "MaterialDesignSwitchToggleButton",
+      "wpfResourceKey": "DS.Style.Switch",
+      "verifyNote": "Appears needed for Settings screen toggles — confirm in Settings Figma frames."
+    },
+    {
+      "name": "Slider",
+      "figmaStatus": "likely",
+      "shadcnName": "Slider",
+      "mdixBase": "MaterialDesignSlider",
+      "wpfResourceKey": "DS.Style.Slider",
+      "verifyNote": "Expected for Gain/Speed in ECG viewer — confirm the gain/speed controls are sliders, not segmented."
+    },
+    {
+      "name": "Dialog",
+      "figmaStatus": "confirmed",
+      "aka": "Modal",
+      "shadcnName": "Dialog",
+      "parts": [
+        "Dialog",
+        "DialogHeader",
+        "DialogBody",
+        "DialogFooter"
+      ],
+      "examples": [
+        "Format & Leads",
+        "Create Event",
+        "Edit Event",
+        "Delete event",
+        "Select an action"
+      ],
+      "mdixBase": "DialogHost",
+      "wpfResourceKey": "DS.Style.Dialog"
+    },
+    {
+      "name": "DropdownMenu",
+      "figmaStatus": "confirmed",
+      "shadcnName": "DropdownMenu",
+      "examples": [
+        "Select an action",
+        "Row overflow ⋯"
+      ],
+      "mdixBase": "ContextMenu",
+      "wpfResourceKey": "DS.Style.DropdownMenu"
+    },
+    {
+      "name": "Tabs",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Tabs",
+      "mdixBase": "TabControl",
+      "wpfResourceKey": "DS.Style.Tabs",
+      "examples": [
+        "Realtime / Review / Manual Preview / Full Disclosure"
+      ]
+    },
+    {
+      "name": "SegmentedControl",
+      "figmaStatus": "confirmed",
+      "shadcnName": "ToggleGroup (shadcn equivalent)",
+      "mdixBase": "n/a — custom ToggleButton row",
+      "wpfResourceKey": "DS.Style.SegmentedControl",
+      "examples": [
+        "12 leads / 15 leads",
+        "Format / Rhythm",
+        "25 mm/s / 50 mm/s"
+      ]
+    },
+    {
+      "name": "Table",
+      "figmaStatus": "confirmed",
+      "aka": "DataTable",
+      "shadcnName": "Table",
+      "parts": [
+        "Table",
+        "TableHead",
+        "TableRow",
+        "TableCell"
+      ],
+      "mdixBase": "DataGrid",
+      "wpfResourceKey": "DS.Style.DataGrid",
+      "examples": [
+        "Settings exam list at bottom of Components MVP3"
+      ]
+    },
+    {
+      "name": "Toolbar",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Toolbar (custom pattern)",
+      "mdixBase": "ToolBar",
+      "wpfResourceKey": "DS.Style.Toolbar",
+      "examples": [
+        "ECG viewer bottom strip",
+        "Taskbar action row"
+      ]
+    },
+    {
+      "name": "Tooltip",
+      "figmaStatus": "likely",
+      "shadcnName": "Tooltip",
+      "mdixBase": "ToolTip",
+      "wpfResourceKey": "DS.Style.Tooltip",
+      "verifyNote": "A 'Sample tooltip' layer appears in the Figma left panel — confirm style."
+    },
+    {
+      "name": "PatientHeader",
+      "figmaStatus": "confirmed",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.PatientHeader",
+      "parts": [
+        "Avatar",
+        "Identity",
+        "Vitals (HR/PR/QRS)",
+        "Status chip",
+        "Actions"
+      ],
+      "when": "Top strip of every ECG screen (Realtime, Review, Manual Preview)."
+    },
+    {
+      "name": "SettingsList",
+      "figmaStatus": "confirmed",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.SettingsList",
+      "parts": [
+        "SettingsRail (groups + items)",
+        "SettingsDetail"
+      ],
+      "when": "Settings application shell. Replicates the left-rail + right-detail pattern seen in Figma."
+    },
+    {
+      "name": "IconButton",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "variants": [
+        "default",
+        "STAT",
+        "printing",
+        "printing_waiting",
+        "USB",
+        "transmit"
+      ],
+      "wpfResourceKey": "DS.Style.IconButton",
+      "verifyNote": "Seen as 'Icon Button_mvp3/mvp5', 'STAT Icon Button', 'Printer Icon Button', 'USB Icon Button', 'transmit_Icon Button' (e.g. 37646:53396, 37646:46325)."
+    },
+    {
+      "name": "IconRail",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.IconRail",
+      "when": "Vertical column of IconButtons docked to the right of the ECG viewer.",
+      "verifyNote": "Container frame of 52px-wide IconButtons at 72px pitch (e.g. 37646:52164, 37646:53396)."
+    },
+    {
+      "name": "TaskBar",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.TaskBar",
+      "verifyNote": "Instance 'Task bar_final_mvp3' (1280x24) on every screen."
+    },
+    {
+      "name": "UpperBar",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.UpperBar",
+      "variants": [
+        "dark",
+        "dark_mvp3",
+        "dark_mvp5"
+      ],
+      "verifyNote": "Instance 'Upper bar dark_mvp3/mvp5' (1280x80). Confirm whether mvp3 and mvp5 are the same component."
+    },
+    {
+      "name": "BottomBar",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.BottomBar",
+      "verifyNote": "Instance 'Bottom bar_mvp3/mvp5' (1280x86/87). Likely a specialisation of Toolbar (ECG viewer bottom strip)."
+    },
+    {
+      "name": "FlagFill",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.FlagFill",
+      "when": "Numbered flag marker on an acquisition row (ECG replicates).",
+      "verifyNote": "Seen in 37646:53554 ('ECG replicates'): 20x20 flag vector with numeric label."
+    },
+    {
+      "name": "MultiSitePanel",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.MultiSitePanel",
+      "verifyNote": "360x619 right-docked panel ('Multi site', e.g. 37646:46325, 37646:46309)."
+    },
+    {
+      "name": "ReportModal",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Dialog variant",
+      "wpfResourceKey": "DS.Style.ReportModal",
+      "parts": [
+        "Header (Dashboard + close)",
+        "Tabs (Interpretation / Physician / Other info)",
+        "Form Control (Textarea or Select)",
+        "Footer (two Buttons)"
+      ],
+      "verifyNote": "'Report modal v3' (609px wide) in 37646:53481 and 37646:53436. Could be Dialog + Tabs composition rather than a new component; decide before locking."
+    },
+    {
+      "name": "WorkflowAssistant",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.WorkflowAssistant",
+      "variants": [
+        "default",
+        "single-event",
+        "thinking",
+        "message",
+        "2-messages",
+        "pdf",
+        "all-results"
+      ],
+      "verifyNote": "360x620 right-docked panel with event cards and Done/PDF action row (37646:61237, 61259, 61321, 61352, 61371, 61391)."
+    },
+    {
+      "name": "MoreWorkflowsPanel",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.MoreWorkflowsPanel",
+      "verifyNote": "360x620 panel with search input and scrollable event list (37646:61276)."
+    },
+    {
+      "name": "MandatoryFieldsDropdown",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.MandatoryFieldsDropdown",
+      "variants": [
+        "collapsed",
+        "opened"
+      ],
+      "verifyNote": "314px accordion of CheckBox rows grouped by Main info / Clinical info / Other info (37646:52042, 37646:52076)."
+    },
+    {
+      "name": "SettingTitle",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.SettingTitle",
+      "parts": [
+        "Icon",
+        "Title",
+        "Trailing Button"
+      ],
+      "verifyNote": "380x48 row in settings screens (37646:35595)."
+    },
+    {
+      "name": "LeadLayoutPicker",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.LeadLayoutPicker",
+      "parts": [
+        "Lead tile grid (3x5)",
+        "ResetConfirm button bar"
+      ],
+      "verifyNote": "'lead 6x1' frames, 312px wide (37646:51981, 37646:51936). Related to SegmentedControl (12 leads / 15 leads)."
+    },
+    {
+      "name": "PDFViewerToolbar",
+      "figmaStatus": "likely",
+      "shadcnName": "n/a — Anchor-specific",
+      "wpfResourceKey": "DS.Style.PDFViewerToolbar",
+      "parts": [
+        "Page navigation",
+        "Zoom select",
+        "Alert icons"
+      ],
+      "verifyNote": "Review_pdf viewer toolbar (37646:61421)."
+    },
+    {
+      "name": "Toast",
+      "figmaStatus": "unverified",
+      "shadcnName": "sonner-style toast (Anchor-specific)",
+      "wpfResourceKey": "DS.Style.Toast",
+      "parts": [
+        "Icon (severity)",
+        "Message",
+        "Optional action link",
+        "Close"
+      ],
+      "verifyNote": "Source: toast_bottom_center_prototype_v2 (https://scarboni-design.github.io/index/toast_bottom_center_prototype_v2.html). Not present in Figma; confirm before production."
+    },
+    {
+      "name": "Loading",
+      "figmaStatus": "confirmed",
+      "shadcnName": "spinner (custom — dots-fade variant)",
+      "wpfResourceKey": "DS.Style.Loading.DotsFade",
+      "parts": [
+        "3 dots (6×6, 8px gap, border-radius 50%)",
+        "Optional label beneath"
+      ],
+      "variants": {
+        "color": ["orange (#FB8500)", "white (#FFFFFF)"],
+        "size":  ["default (6px dot, 8px gap)"]
+      },
+      "animation": {
+        "property": "opacity only",
+        "range": "0.15 → 1 → 0.15",
+        "duration": "1.4s",
+        "easing": "ease-in-out",
+        "stagger": "0s / 0.2s / 0.4s",
+        "reducedMotion": "disables animation, dots stay at opacity 1"
+      },
+      "figmaNodes": ["37646:52414 (EmptyList-loading: dots + \"Loading exams…\")"],
+      "specSource": "https://scarboni-design.github.io/index/dots_animation.html"
+    },
+    {
+      "name": "ECGBottomBar",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.ECGBottomBar",
+      "parts": [
+        "Lead label",
+        "Time scale",
+        "Actions"
+      ],
+      "verifyNote": "Figma node 32705:66418. ECG bottom bar (lead strip, time scale, Clear/Cancel/Confirm, swipe handle)."
+    },
+    {
+      "name": "ScheduledSetup",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.ScheduledSetup",
+      "parts": [
+        "Form control",
+        "Chips -/+"
+      ],
+      "verifyNote": "Figma node 32705:70073. Scheduled setup modal (360px)."
+    },
+    {
+      "name": "EventList",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.EventList",
+      "parts": [
+        "Header",
+        "Event rows"
+      ],
+      "verifyNote": "Figma node 32705:69357. Event list (flagged-event picker, 353px)."
+    },
+    {
+      "name": "EventsECG",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.EventsECG",
+      "parts": [
+        "Event rows",
+        "Edit button"
+      ],
+      "verifyNote": "Figma node 32705:68768. Events ECG list with edit (353px)."
+    },
+    {
+      "name": "MultiSite",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.MultiSite",
+      "parts": [
+        "Header",
+        "Unit rows"
+      ],
+      "verifyNote": "Figma node 32705:68806. Multi site unit picker (353px)."
+    },
+    {
+      "name": "DetectingElectrodes",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.DetectingElectrodes",
+      "parts": [
+        "Body image",
+        "Lead dots",
+        "Legend",
+        "Run button"
+      ],
+      "verifyNote": "Figma node 32705:68874. Impedance check with lead positions (353px)."
+    },
+    {
+      "name": "TaskbarController",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.TaskbarController",
+      "parts": [
+        "Sliders",
+        "Tiles",
+        "Power"
+      ],
+      "verifyNote": "Figma node 32705:70244. Quick panel: brightness, volume, network, Bluetooth, light mode, shutdown (444x356)."
+    },
+    {
+      "name": "SystemSettings",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.SystemSettings",
+      "parts": [
+        "Category list",
+        "Form",
+        "Switch"
+      ],
+      "verifyNote": "Figma node 32705:64008. System settings modal (776x562)."
+    },
+    {
+      "name": "SettingsFullScreen",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.SettingsFullScreen",
+      "parts": [
+        "Rail",
+        "Two-column form",
+        "Actions"
+      ],
+      "verifyNote": "Figma node 32705:69637. Settings application screen, light."
+    },
+    {
+      "name": "PatientForm",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.PatientForm",
+      "parts": [
+        "Tabs",
+        "Form fields",
+        "Actions"
+      ],
+      "verifyNote": "Figma node 32705:65487. Patient entry with tabs (Unknown patient)."
+    },
+    {
+      "name": "ExamSearch",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.ExamSearch",
+      "parts": [
+        "Search chips",
+        "Search field",
+        "Patient cards"
+      ],
+      "verifyNote": "Figma node 32705:66067. Exam search with results list."
+    },
+    {
+      "name": "RhythmLead",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.RhythmLead",
+      "parts": [
+        "Tile grid",
+        "Badges",
+        "Clear/Confirm"
+      ],
+      "verifyNote": "Figma node 32705:69260. Rhythm lead picker with priority badges."
+    },
+    {
+      "name": "EmptyStateSearch",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.EmptyStateSearch",
+      "parts": [
+        "Illustration",
+        "Title",
+        "Text"
+      ],
+      "verifyNote": "Figma node 37646:52278. Empty state: no results for search."
+    },
+    {
+      "name": "EmptyStateExams",
+      "figmaStatus": "confirmed",
+      "shadcnName": "Anchor-specific",
+      "wpfResourceKey": "DS.Style.EmptyStateExams",
+      "parts": [
+        "Illustration",
+        "Title",
+        "Text",
+        "Primary button"
+      ],
+      "verifyNote": "Figma node 37646:52424. Empty state: no ECG exams registered."
+    }
+  ],
+  "candidates_to_verify_or_remove": [
+    {
+      "name": "Breadcrumb",
+      "reason": "Not explicitly seen in Components MVP3 or the 22 exported screens. Likely unnecessary for a touch kiosk UI.",
+      "action": "Remove from preview unless confirmed in Figma."
+    },
+    {
+      "name": "Pagination",
+      "reason": "Not explicitly seen. Settings table may use infinite scroll or filter instead.",
+      "action": "Remove from preview unless confirmed in Figma."
+    },
+    {
+      "name": "Progress / Spinner",
+      "reason": "Plausible for acquisition flows but not explicitly confirmed in the boards reviewed.",
+      "action": "Verify in realtime/acquisition Figma frames before locking."
+    },
+    {
+      "name": "EmptyState",
+      "reason": "Generic pattern — not seen as a dedicated component in Figma.",
+      "action": "Verify or keep as a pattern (CSS class) rather than a component."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Anchor Design System</title>
+<link rel="stylesheet" href="tokens.css?v=5" />
+<link rel="stylesheet" href="styles.css?v=5" />
+<link rel="stylesheet" href="shell.css?v=5" />
+</head>
+<body data-page="home">
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="brand" style="text-decoration:none;color:inherit"><span class="brand-dot"></span><span>Anchor DS</span><span class="badge badge-neutral">Preview · v0.1</span></a>
+  </div>
+  <div class="topbar-right">
+    <button class="btn btn-ghost btn-sm" id="themeToggle" aria-label="Toggle theme"><span class="theme-icon">◐</span> <span id="themeLabel">Dark</span></button>
+  </div>
+</header>
+<main class="home">
+  <section class="home-hero">
+    <h1>Anchor DS</h1>
+    <p class="home-tag">Design system for the Anchor Windows software. Same visual language as Beat 2 (shadcn), implemented in WPF/XAML on top of MaterialDesignThemes.</p>
+  </section>
+  <section class="home-grid">
+    <a class="home-card" href="foundations.html"><h3>Foundations</h3><p>Colors, typography, spacing and icons — the decisions every component inherits.</p></a>
+    <a class="home-card" href="components.html"><h3>Components</h3><p>12 primitives, rendered live.</p></a>
+    <a class="home-card" href="blocks.html"><h3>Blocks</h3><p>24 compositions: screens, panels, shared chunks.</p></a>
+  </section>
+</main>
+<script>
+  (function(){var r=document.documentElement,b=document.getElementById('themeToggle'),l=document.getElementById('themeLabel');
+  function a(t){r.setAttribute('data-theme',t);if(l)l.textContent=t==='dark'?'Dark':'Light';try{localStorage.setItem('anchor-ds-theme',t)}catch(e){}}
+  var s=null;try{s=localStorage.getItem('anchor-ds-theme')}catch(e){}if(s)a(s);
+  if(b)b.addEventListener('click',function(){a(r.getAttribute('data-theme')==='dark'?'light':'dark')});})();
+</script>
+</body>
+</html>

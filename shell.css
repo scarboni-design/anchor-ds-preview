@@ -1,0 +1,85 @@
+/* shell.css — shared layout additions for the multi-page DS */
+
+.page-head { padding-bottom: var(--sp-lg); border-bottom: 1px solid var(--color-border); margin-bottom: var(--sp-xl); }
+.page-head h1 { margin: 0; font-size: 28px; }
+
+.sidenav .nav-item.active { background: color-mix(in srgb, var(--color-primary), transparent 88%); color: var(--color-foreground); font-weight: 600; }
+.sidenav .nav-item.nav-sub { padding-left: 20px; }
+
+/* Code accordion (replaces old .code-block) */
+.code-accordion {
+  margin-top: var(--sp-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-card), transparent 20%);
+  overflow: hidden;
+}
+.code-accordion > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  color: var(--color-muted-foreground);
+  user-select: none;
+}
+.code-accordion > summary::-webkit-details-marker { display: none; }
+.code-accordion .code-caret { display: inline-block; transition: transform .15s; font-size: 14px; line-height: 1; opacity: .7; }
+.code-accordion[open] .code-caret { transform: rotate(90deg); }
+.code-accordion .code-label { letter-spacing: .06em; text-transform: uppercase; opacity: .7; }
+.code-accordion > summary > .btn-ghost-copy { margin-left: auto; }
+
+.btn-ghost-copy {
+  background: transparent;
+  border: none;
+  color: var(--color-muted-foreground);
+  font-size: 11px;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.btn-ghost-copy:hover { background: var(--color-muted); color: var(--color-foreground); }
+.btn-ghost-copy.is-ok { color: var(--color-primary); }
+
+.code-accordion .code-pre {
+  margin: 0;
+  padding: 10px 12px 14px;
+  border-top: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-background), transparent 30%);
+  font-size: 11.5px;
+  line-height: 1.5;
+  overflow: auto;
+  max-height: 400px;
+}
+
+/* Home landing */
+.home { max-width: 980px; margin: 0 auto; padding: 60px 40px; }
+.home-hero h1 { font-size: 44px; margin: 0 0 10px; letter-spacing: -.01em; }
+.home-hero .home-tag { color: var(--color-muted-foreground); font-size: 16px; max-width: 640px; line-height: 1.55; margin: 0 0 40px; }
+.home-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.home-card {
+  display: block;
+  padding: 20px 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-card);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .15s, transform .08s;
+}
+.home-card:hover { border-color: var(--color-primary); }
+.home-card:active { transform: scale(.995); }
+.home-card h3 { margin: 0 0 6px; font-size: 18px; }
+.home-card p { margin: 0; font-size: 13px; color: var(--color-muted-foreground); line-height: 1.5; }
+
+/* Hide the body's main content margin on home */
+body[data-page="home"] .sidenav { display: none; }
+body[data-page="home"] .home { margin-left: 0; }
+

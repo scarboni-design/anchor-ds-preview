@@ -1,0 +1,5 @@
+*.bak
+*.bak-*
+*.broken-backup.html
+.DS_Store
+Thumbs.db
