@@ -354,9 +354,13 @@
           { name: 'qp_settings.svg' },
           { name: 'qp_power.svg' },
         ]},
-        // System bar icons (sys_lang / sys_country / sys_conn / sys_devconn / sys_system)
-        // were exported with their background circle baked in and no clean inner glyph,
-        // so they render as solid dots in the DS. Pending re-export from Figma without the circle.
+        { title: 'System settings', kind: 'glyph', icons: [
+          { name: 'ss_language.svg',     label: 'language',     mono: false, note: 'Circle baked in — dark bg only.' },
+          { name: 'ss_timezone.svg',     label: 'timezone',     mono: false, note: 'Circle baked in — dark bg only.' },
+          { name: 'ss_connectivity.svg', label: 'connectivity', mono: false, note: 'Circle baked in — dark bg only.' },
+          { name: 'ss_device.svg',       label: 'device',       mono: false, note: 'Circle baked in — dark bg only.' },
+          { name: 'ss_system.svg',       label: 'system',       mono: false, note: 'Circle baked in — dark bg only.' },
+        ]},
         { title: 'Flag marker', kind: 'glyph', icons: [
           { name: 'flag.svg' },
         ]},
