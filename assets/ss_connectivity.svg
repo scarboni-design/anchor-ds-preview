@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon Container">
+<circle id="Ellipse 192" cx="15" cy="15" r="15" fill="white" fill-opacity="0.16"/>
+<g id="wifi" clip-path="url(#clip0_0_65)">
+<path id="Vector" d="M10.3333 15.3667C11.651 14.2691 13.3117 13.6681 15.0267 13.6681C16.7416 13.6681 18.4023 14.2691 19.72 15.3667" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="white" stroke-opacity="0.48"/>
+<path id="Vector_2" d="M7.94667 13C9.89495 11.2826 12.4029 10.3351 15 10.3351C17.5971 10.3351 20.1051 11.2826 22.0533 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="white" stroke-opacity="0.48"/>
+<path id="Vector_3" d="M12.6867 17.74C13.3635 17.2592 14.1731 17.0008 15.0033 17.0008C15.8336 17.0008 16.6432 17.2592 17.32 17.74" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="white" stroke-opacity="0.48"/>
+<path id="Vector_4" d="M15 20.3333H15.0067" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="white" stroke-opacity="0.48"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_65">
+<rect width="16" height="16" fill="white" transform="translate(7 7)"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="30.4569" height="30" viewBox="0 0 30.4569 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon Container">
+<ellipse id="Ellipse 192" cx="15.2284" cy="15" rx="15.2284" ry="15" fill="white" fill-opacity="0.16"/>
+<g id="bluetooth" clip-path="url(#clip0_0_72)">
+<path id="Vector" d="M11.5339 11.3055L18.9229 18.6945L15.2284 22.389V7.61104L18.9229 11.3055L11.5339 18.6945" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="white" stroke-opacity="0.48"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_72">
+<rect width="16.1214" height="16.1214" fill="white" transform="translate(7.16774 6.93932)"/>
+</clipPath>
+</defs>
+</svg>

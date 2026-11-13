@@ -224,9 +224,9 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--color-primary)
 .fm-tile { width: 54px; height: 54px; border-radius: 8px; }
 .fm-tile.is-selected, .vz-tile.is-selected { border-color: var(--color-primary); color: var(--color-primary); }
 .fm-actions { flex-basis: 100%; display: flex; justify-content: center; gap: 20px; }
-.fm-btn { width: 100px; height: 40px; border: none; border-radius: 6px; padding: 10px 12px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-family: inherit; font-size: 14px; font-weight: 600; line-height: 20px; cursor: pointer; }
+.fm-btn { width: 100px; height: 40px; border: none; border-radius: 6px; padding: 10px 12px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-family: inherit; font-size: 14px; font-weight: 600; line-height: 20px; white-space: nowrap; cursor: pointer; box-sizing: border-box; }
 .fm-btn-default { background: var(--color-surface-tile); color: var(--color-foreground); }
-.fm-btn-confirm { background: var(--color-secondary); color: var(--color-foreground); }
+.fm-btn-confirm { background: var(--color-secondary); color: var(--color-secondary-foreground); }
 .fm-btn-confirm img { width: 14px; height: 14px; }
 .vz-title { position: absolute; left: 25px; top: 16px; height: 40px; display: flex; align-items: center; font-size: 20px; font-weight: 700; line-height: 1.2; white-space: nowrap; }
 .vz-body { position: absolute; left: 24px; top: 80px; width: 332px; display: flex; flex-direction: column; gap: 24px; }
@@ -414,17 +414,22 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; background: v
 .sys-tray-icon { font-family: "Segoe Fluent Icons", "Segoe MDL2 Assets", sans-serif; font-size: 16px; color: #fff; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; line-height: 1; }
 
 /* Patient header bar — Figma 37646:29782, dark, 80px. */
-.ph-bar { display: flex; align-items: center; height: 80px; width: 100%; background: var(--ph-bar-bg); padding: 0 16px; gap: 12px; border-radius: var(--radius-md); box-shadow: 0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px rgba(0,0,0,0.06); font-family: var(--font-sans); }
+/* ♥ 85 is absolutely centered (matches Figma: left 50% / top 50% / translate -50%). */
+.ph-bar { position: relative; display: flex; align-items: center; height: 80px; width: 100%; background: var(--ph-bar-bg); padding: 0 16px; gap: 12px; border-radius: var(--radius-md); box-shadow: 0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px rgba(0,0,0,0.06); font-family: var(--font-sans); }
 .ph-btn { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; flex-shrink: 0; border-radius: var(--radius-md); }
 .ph-btn:hover { background: rgba(255,255,255,0.08); }
 .ph-btn img { width: 24px; height: 24px; }
+/* Menu SVG is 48×48 with built-in padding — render full size, no extra centering padding. */
+.ph-btn-menu { width: 48px; height: 48px; background: none; border: none; cursor: pointer; flex-shrink: 0; padding: 0; }
+.ph-btn-menu img { width: 48px; height: 48px; display: block; }
 .ph-patient { flex: 1; min-width: 0; }
-.ph-name { font-size: 20px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ph-name { font-size: 20px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: none; }
+.ph-name--link { text-decoration: underline; }
 .ph-id { font-size: 16px; color: rgba(255,255,255,0.48); line-height: 1.4; }
-.ph-hr { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.ph-hr { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 8px; }
 .ph-hr img { width: 20px; height: 20px; }
-.ph-hr-val { font-size: 30px; font-weight: 700; color: rgba(255,255,255,0.8); line-height: 1; }
-.ph-sync { display: flex; align-items: center; gap: 6px; font-size: 16px; color: rgba(255,255,255,0.8); flex-shrink: 0; margin-left: 16px; }
+.ph-hr-val { font-size: 30px; font-weight: 700; color: rgba(255,255,255,0.8); line-height: 1.2; }
+.ph-sync { display: flex; align-items: center; gap: 4px; font-size: 16px; color: rgba(255,255,255,0.8); flex-shrink: 0; margin-left: auto; }
 .ph-sync img { width: 20px; height: 20px; }
 
 /* ECG acquisition bottom bar — Figma 37646:30497, dark. */
@@ -573,10 +578,10 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; background: v
 .lp-frame:first-child .lp-tile.is-selected { background: var(--color-surface-tile); border-color: var(--color-primary); color: var(--color-primary); }
 .lp-tile.is-selected { background: var(--lead-selected-bg); border-color: var(--table-row-selected); color: var(--color-foreground); }
 .lp-badge { position: absolute; right: -6px; bottom: -6px; width: 20px; height: 20px; border-radius: 500px; background: var(--lead-badge-bg); color: #fff; font-size: 12px; font-weight: 600; line-height: 20px; text-align: center; }
-.lp-actions { display: flex; gap: 12px; align-items: center; }
-.lp-btn { height: 40px; padding: 10px 16px; border: 1px solid var(--color-border); border-radius: 6px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.lp-actions { display: flex; flex-direction: row; flex-wrap: nowrap; gap: 12px; align-items: center; justify-content: flex-start; }
+.lp-btn { height: 40px; padding: 10px 16px; border: 1px solid var(--color-border); border-radius: 6px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; box-sizing: border-box; }
 .lp-clear { width: 90px; background: var(--color-surface-tile); color: var(--color-foreground); }
-.lp-confirm { width: 103px; background: var(--color-secondary); color: var(--color-foreground); border-color: transparent; }
+.lp-confirm { width: 103px; background: var(--color-secondary); color: var(--color-secondary-foreground); border-color: transparent; }
 
 /* Code blocks (copy button per section, Beat 2 pattern) */
 .code-block { margin-top: var(--sp-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; background: var(--color-muted); }
@@ -640,26 +645,34 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; background: v
 .ec-bad-led { background: var(--color-destructive); }
 .ec-run { position: absolute; left: 24px; top: 547px; width: 265px; height: 40px; border: none; border-radius: 6px; background: var(--color-primary); color: var(--color-primary-foreground); font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer; }
 
-.qp { position: relative; width: 444px; height: 356px; box-sizing: border-box; background: var(--color-card); border-radius: 15px; box-shadow: 0 1px 1.5px rgba(0,0,0,.1), 0 1px 1px rgba(0,0,0,.06); overflow: hidden; }
-.qp-row { position: absolute; left: 32px; right: 32px; top: 28px; display: flex; justify-content: space-between; }
-.qp-power { width: 60px; height: 48px; border: none; border-radius: 6px; background: var(--color-destructive); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+/* Quick panel — always dark, fixed colors (not theme-aware) */
+.qp { position: relative; width: 438px; height: 370px; box-sizing: border-box; background: #1c1c1f; border-radius: 15px; box-shadow: 0 4px 24px rgba(0,0,0,.45); overflow: hidden; }
+.qp-status { position: absolute; left: 32px; right: 32px; top: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 10px; line-height: 16px; color: rgba(255,255,255,0.56); }
+.qp-battery { display: flex; align-items: center; gap: 4px; }
+.qp-battery img { width: 18px; height: 18px; filter: brightness(0) invert(1); opacity: 0.56; }
+.qp-row { position: absolute; left: 32px; right: 32px; top: 50px; display: flex; justify-content: space-between; }
+.qp-btn-group { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.qp-power { width: 60px; height: 48px; border: none; border-radius: 6px; background: #e53e3e; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 .qp-power img { width: 22px; height: 22px; filter: brightness(0) invert(1); }
-.qp-settings { width: 60px; height: 48px; border: none; border-radius: 6px; background: var(--color-secondary); display: flex; align-items: center; justify-content: center; cursor: pointer; }
-.qp-settings img { width: 22px; height: 22px; }
-.qp-slider { position: absolute; left: 32px; right: 32px; height: 24px; display: flex; align-items: center; }
-.qp-slider:nth-of-type(1), .qp-slider:nth-child(2) { top: 144px; }
-.qp-slider:nth-child(3) { top: 202px; }
-.qp-slider img { width: 100%; height: 22px; }
-.qp-tiles { position: absolute; left: 32px; right: 32px; bottom: 28px; display: flex; justify-content: space-between; align-items: flex-end; }
+.qp-settings { width: 60px; height: 48px; border: none; border-radius: 6px; background: rgba(255,255,255,0.09); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.qp-settings img { width: 22px; height: 22px; filter: brightness(0) invert(1); opacity: 0.8; }
+.qp-slider { position: absolute; left: 32px; right: 32px; height: 24px; display: flex; align-items: center; gap: 10px; }
+.qp-brightness { top: 168px; }
+.qp-volume { top: 226px; }
+.qp-slider-ico { width: 20px; height: 20px; flex-shrink: 0; filter: brightness(0) invert(1); opacity: 0.7; }
+.qp-slider-track { flex: 1; height: 22px; display: block; }
+.qp-tiles { position: absolute; left: 32px; right: 32px; top: 284px; display: flex; justify-content: space-between; align-items: flex-start; }
 .qp-tile { width: 103px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.qp-tile-ico { width: 103px; height: 48px; border-radius: 6px; background: var(--color-muted); display: flex; align-items: center; justify-content: center; }
-.qp-tile-ico img { width: 24px; height: 24px; }
-.qp-tile-off .qp-tile-ico { background: var(--color-muted); }
+.qp-tile-ico { width: 103px; height: 48px; border-radius: 6px; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; }
+.qp-tile-ico img { width: 24px; height: 24px; filter: brightness(0) invert(1); opacity: 0.75; }
+.qp-tile-off .qp-tile-ico { background: rgba(255,255,255,0.05); }
 .qp-tile-mode { width: 103px; }
-.qp-tile-mode > span:first-child, .qp-tile-mode .qp-mode-off { display: inline-flex; }
-.qp-mode-on, .qp-mode-off { width: 51px; height: 48px; display: inline-flex; align-items: center; justify-content: center; background: var(--color-muted); }
-.qp-mode-on img, .qp-mode-off img { width: 24px; height: 24px; }
-.qp-cap { font-size: 10px; line-height: 16px; color: var(--color-foreground); text-align: center; white-space: nowrap; }
+.qp-mode-row { display: flex; flex-direction: row; border-radius: 6px; overflow: hidden; width: 103px; height: 48px; }
+.qp-mode-on, .qp-mode-off { width: 51px; height: 48px; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); flex-shrink: 0; }
+.qp-mode-active { background: rgba(255,255,255,0.14); }
+.qp-mode-on img, .qp-mode-off img { width: 24px; height: 24px; filter: brightness(0) invert(1); opacity: 0.6; }
+.qp-mode-active img { opacity: 1; }
+.qp-cap { font-size: 10px; line-height: 16px; color: rgba(255,255,255,0.72); text-align: center; white-space: nowrap; }
 
 .fm.ss { position: relative; }
 .ss { position: relative; width: 776px; height: 562px; box-sizing: border-box; background: var(--color-card); border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 3px rgba(0,0,0,.1), 0 2px 2px rgba(0,0,0,.06); color: var(--color-foreground); }
@@ -671,7 +684,7 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; background: v
 .ss-item.is-active { background: var(--color-secondary); }
 .ss-item b { display: block; font-size: 14px; font-weight: 500; line-height: 20px; }
 .ss-item small { display: block; font-size: 12px; line-height: 16px; color: var(--color-muted-foreground); }
-.ss-ico { width: 30px; height: 30px; border-radius: 50%; background: var(--color-muted); display: inline-flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+.ss-ico { width: 30px; height: 30px; flex-shrink: 0; display: block; }
 .ss-form { position: absolute; left: 334px; top: 99px; width: 368px; display: flex; flex-direction: column; gap: 24px; }
 .ss-toggle-row { display: flex; justify-content: space-between; align-items: center; font-size: 16px; line-height: 24px; }
 .ss-switch { position: relative; width: 48px; height: 24px; border-radius: 12px; background: var(--color-muted-foreground); display: inline-block; }
@@ -785,7 +798,7 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; background: v
 
 
 /* Patient entry - Figma 37646:40570 (1280x800 frame). Absolute positions from node metadata. */
-.pf { position: relative; width: 1280px; height: 800px; zoom: .6; background: hsl(var(--background)); color: hsl(var(--foreground)); overflow: hidden; font-family: var(--font-sans); border: 1px solid var(--color-border); border-radius: 6px; }
+.pf { position: relative; width: 1280px; height: 650px; zoom: .6; background: hsl(var(--background)); color: hsl(var(--foreground)); overflow: hidden; font-family: var(--font-sans); border: 1px solid var(--color-border); border-radius: 6px; }
 .pf > div { position: absolute; box-sizing: border-box; }
 .pf-task { background: color-mix(in srgb, var(--color-muted-foreground), transparent 70%); }
 .pf-upper { background: var(--color-card); border-bottom: 1px solid var(--color-border); }
